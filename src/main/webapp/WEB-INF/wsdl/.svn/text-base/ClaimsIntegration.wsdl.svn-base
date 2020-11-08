@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:tns="http://webservice.claimsintegration.sgicanada.ca/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	name="ClaimsIntegration" 
+	targetNamespace="http://webservice.claimsintegration.sgicanada.ca/">
+  
+  <!-- Type definitions for input and output parameters for webservice -->
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://webservice.claimsintegration.sgicanada.ca/" elementFormDefault="qualified">
+      <xsd:element name="sendDispatchAssignment">
+        <xsd:complexType>
+          <xsd:sequence>
+          	<xsd:element name="ClaimNumber" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+
+
+          	<xsd:element name="Action" type="xsd:string" minOccurs="0" maxOccurs="1"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="sendDispatchAssignmentResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="status" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getClaimPackage">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="claimNumber" type="xsd:string"
+      				minOccurs="1" maxOccurs="1">
+      			</xsd:element>
+      			<xsd:element name="url" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getClaimPackageResponse">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="status" type="xsd:string" minOccurs="1" maxOccurs="1"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  
+  <!--  Message definitions for input and output -->
+  <wsdl:message name="sendDispatchAssignmentRequest">
+    <wsdl:part element="tns:sendDispatchAssignment" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="sendDispatchAssignmentResponse">
+    <wsdl:part element="tns:sendDispatchAssignmentResponse" name="parameters"/>
+  </wsdl:message>
+  
+  <!-- Port (interface) definitions -->
+  <wsdl:message name="getClaimPackageRequest">
+  	<wsdl:part name="parameters" element="tns:getClaimPackage"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getClaimPackageResponse">
+  	<wsdl:part name="parameters" element="tns:getClaimPackageResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ClaimsIntegrationEndpoint">
+    <wsdl:operation name="sendDispatchAssignment">
+      <wsdl:input message="tns:sendDispatchAssignmentRequest"/>
+      <wsdl:output message="tns:sendDispatchAssignmentResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getClaimPackage">
+    	<wsdl:input message="tns:getClaimPackageRequest"></wsdl:input>
+    	<wsdl:output message="tns:getClaimPackageResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  <!-- Port bindings to transports and encoding - HTTP, document literal encoding is used. -->
+  <wsdl:binding name="ClaimsIntegrationBinding"
+  	type="tns:ClaimsIntegrationEndpoint">
+  	<soap:binding style="document"
+  		transport="http://schemas.xmlsoap.org/soap/http" />
+  	<wsdl:operation name="sendDispatchAssignment">
+  		<soap:operation
+  			soapAction="http://webservice.claimsintegration.sgicanada.ca/sendDispatchAssignment" />
+  		<wsdl:input>
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  	</wsdl:operation>
+  	<wsdl:operation name="getClaimPackage">
+  		<soap:operation
+  			soapAction="http://webservice.claimsintegration.sgicanada.ca/getClaimPackage" />
+  		<wsdl:input>
+  			<soap:body use="literal" />
+  		</wsdl:input>
+  		<wsdl:output>
+  			<soap:body use="literal" />
+  		</wsdl:output>
+  	</wsdl:operation>
+  </wsdl:binding>
+
+  <!-- Service definition -->
+  <wsdl:service name="ClaimsIntegration">
+    <wsdl:port binding="tns:ClaimsIntegrationBinding" name="ClaimsIntegrationService">
+      <soap:address location="http://localhost:8080/ClaimsIntegration"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

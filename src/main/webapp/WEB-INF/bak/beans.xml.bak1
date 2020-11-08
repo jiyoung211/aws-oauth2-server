@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd 
+						http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	<import resource="classpath:META-INF/cxf/cxf.xml" />	
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	<!-- <jaxrs:server id="services" address="/">
+		<jaxrs:serviceBeans>
+			<ref bean="accessTokenValidateService" />/validate
+			<ref bean="accessTokenIntrospectionService"/>/introspect
+            <ref bean="accessTokenRevocationService"/> /revoke 토큰해지
+            <ref bean="authorizationService" /> /authorize
+			<ref bean="implicitService" />/authorize-implicit
+			<ref bean="oauth2Service"/> authorize
+			<ref bean="clientAppRegService"/> /
+			<ref bean="userRegService"/> /
+			<ref bean="clientService"/>/
+			
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+           <ref bean="oauthJsonProvider"/>
+           <ref bean="jacksonJsonProvider"/>           
+           <ref bean="oauth2AuthorizeView"/>           
+           <ref bean="userSecurityContext"/>
+    		<ref bean="clientView"/>
+        </jaxrs:providers>
+        <jaxrs:properties>
+            <entry key="rs.security.signature.properties" value="classpath:rs.security.properties"/>
+        </jaxrs:properties>
+	</jaxrs:server>  -->
+	
+	<!-- OAuth2 end point -->
+	<jaxrs:server id="idpServer" address="/idp">
+		<jaxrs:serviceBeans>
+			<ref bean="authorizationService"/> <!-- authorize -->
+			<ref bean="accessTokenService" /><!-- /token1 -->
+			
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+		   <ref bean="jacksonJsonProvider"/>
+           <ref bean="oauthJsonProvider"/>
+           <ref bean="oobResponseProvider"/>
+           <ref bean="codeGrantAuthorizeView"/>
+           <ref bean="userSecurityContext"/>
+        </jaxrs:providers>
+        <jaxrs:properties>
+        	<entry key="rs.security.signature.properties" value="classpath:rs.security.properties"/>
+            <entry key="rs.security.encryption.properties" value="classpath:rs.security.properties"/>
+            <entry key="rs.security.signature.key.password.provider" value-ref="keyPasswordProvider"/>
+            <entry key="rs.security.decryption.key.password.provider" value-ref="keyPasswordProvider"/>
+            
+            
+    	    <!-- <entry key="rs.security.signature.in.properties" value="classpath:rs.security.properties"/> 
+ 	    	<entry key="rs.security.signature.key.password.provider" value-ref="keyPasswordProvider"/>  -->            
+    	                
+            <!-- <entry key="rs.security.signature.properties" value="file:${jboss.home.dir}/SGIstuff/${jboss.server.name}/GISAuthServer.properties"/>
+            <entry key="rs.security.encryption.properties" value="file:${jboss.home.dir}/SGIstuff/${jboss.server.name}/GISAuthServer.properties"/>
+            <entry key="rs.security.signature.key.password.provider" value-ref="keyPasswordProvider"/>
+            <entry key="rs.security.decryption.key.password.provider" value-ref="keyPasswordProvider"/> -->
+        </jaxrs:properties>
+	</jaxrs:server>
+	
+<!-- 	<jaxrs:server id="oauthServer" address="/oauth2">
+		<jaxrs:serviceBeans>
+			<ref bean="dynamicRegistrationService"/>
+			<ref bean="accessTokenService"/>
+			<ref bean="accessTokenValidateService"/>
+			<ref bean="accessTokenIntrospectionService"/>
+            <ref bean="accessTokenRevocationService"/>
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+		   <ref bean="jacksonJsonProvider"/>
+           <ref bean="oauthJsonProvider"/>           
+        </jaxrs:providers>
+        <jaxrs:properties>
+            <entry key="rs.security.signature.properties" value="file:C:/eclipse-jee-luna-SR2-win32-x86_64/eclipse v2 gateway/workspace/GISAuthServer/test/integrationtest/src/GISAuthServer.properties"/>
+            <entry key="rs.security.encryption.properties" value="file:C:/eclipse-jee-luna-SR2-win32-x86_64/eclipse v2 gateway/workspace/GISAuthServer/test/integrationtest/src/GISAuthServer.properties"/>
+            
+            <entry key="rs.security.signature.key.password.provider" value-ref="keyPasswordProvider"/>
+            <entry key="rs.security.decryption.key.password.provider" value-ref="keyPasswordProvider"/>
+        </jaxrs:properties>
+	</jaxrs:server> -->
+	
+
+
+
+	
+</beans>

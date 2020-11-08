@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd 
+						http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	<import resource="classpath:META-INF/cxf/cxf.xml" />	
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	
+    <!--
+    <util:list id="noCheckURLS">
+    	value>authorize</value>
+    	<value>authorize/decision</value>
+    	<value>decision</value>
+    	<value>token</value>
+    	<value>introspect</value>
+    	<value>revoke</value
+    	<value>validate</value>
+    </util:list>
+	-->
+	
+    
+
+	
+
+	<bean id="accessTokenValidateService" class="org.apache.cxf.rs.security.oauth2.services.AccessTokenValidatorService">
+		<property name="dataProvider" ref="oauthDataProvider" />
+	</bean>
+	
+	<!-- Access Token Revocation service -->
+    <bean id="accessTokenRevocationService" class="org.apache.cxf.rs.security.oauth2.services.TokenRevocationService">
+        <property name="dataProvider" ref="oauthDataProvider"/>
+    </bean>
+    <!-- Access Token Introspection service -->
+    <bean id="accessTokenIntrospectionService" class="org.apache.cxf.rs.security.oauth2.services.TokenIntrospectionService">
+        <property name="dataProvider" ref="oauthDataProvider"/>
+        <property name="blockUnauthorizedRequests" value="false"/> 
+    </bean>
+    
+    <bean id="defaultResourceOwnerNameProvider" class="org.apache.cxf.rs.security.oauth2.provider.DefaultResourceOwnerNameProvider" />
+    
+    <bean id="authorizationService" class="org.apache.cxf.rs.security.oauth2.services.AuthorizationCodeGrantService">
+		<property name="dataProvider" ref="oauthDataProvider" />
+		<property name="resourceOwnerNameProvider" ref="defaultResourceOwnerNameProvider" />
+		<property name="subjectCreator" ref="idpSubjectCreator" />
+		<property name="canSupportPublicClients" value="true" />
+		<property name="canSupportEmptyRedirectForPrivateClients"
+			value="true" />
+		<property name="sessionAuthenticityTokenProvider" ref="idpSessionAuthenticityTokenProvider" />
+	</bean>
+	
+
+	<bean id="implicitService" class="org.apache.cxf.rs.security.oauth2.services.ImplicitGrantService">
+		<property name="dataProvider" ref="oauthDataProvider" />
+	</bean>
+	<!-- Putting in utility list so we get common end point -->
+	<util:list id="servicesList">
+		<ref bean="authorizationService" />
+		<ref bean="implicitService" />
+	</util:list>
+	
+	<bean id="oauth2Service" class="org.apache.cxf.rs.security.oauth2.services.AuthorizationService">
+	    <property name="services" ref="servicesList"/>
+	</bean>
+
+	<bean id="clientAppRegService" class="com.gaurang.clientapps.services.ClientAppRegistrationService">
+         <property name="dataProvider" ref="oauthDataProvider"/>
+     </bean>
+     
+
+</beans>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:cxf="http://cxf.apache.org/core" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+	http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+	http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd	
+	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	<!-- <context:property-placeholder location="file:${jboss.home.dir}/SGIstuff/${jboss.server.name}/GISAuthServer.properties" 
+		/> -->
+	<context:property-placeholder
+		location="file:C:/eclipse-jee-luna-SR2-win32-x86_64/eclipse v2 gateway/workspace/oauth2-server/src/main/resources/OAuthServer.properties" />
+
+<!-- dynamicRegistrationService -->
+
+	<!-- List of dummy end user/resource owner -->
+	<util:map id="users">
+		<entry key="john" value="1234" />
+		<entry key="admin" value="inzent"/>
+		<entry key="test" value="test"/>
+        <entry key="gaurang" value="gaurang"/>
+        <entry key="yahoo" value="google"/>
+	</util:map>
+
+	<!-- List of accepted scopes -->
+	<util:map id="supportedScopes">
+        <entry key="apiAccess" value="Access the API" />
+        <entry key="email" value="Access the email address" />
+        <entry key="profile" value="Access the profile claims" />
+        <entry key="roles" value="Access the user roles" />
+        <entry key="refreshToken" value="Refresh access tokens" />
+	</util:map>
+
+	<!-- List of required scopes that must be available in request URIs when 
+		client redirects users to SGI API -->
+	<util:list id="coreScopes">
+		<value>apiAccess</value>
+		<value>refreshToken</value>
+	</util:list>
+
+	<!-- Typically the scopes authorized by the user will be reported back to 
+		the client, reporting an approved refreshToken scope is currently disabled -->
+	<util:list id="invisibleToClientScopes">
+		<value>refreshToken</value>
+	</util:list>
+
+	<bean id="oauthJwtAccessTokenProducer"
+		class="org.apache.cxf.rs.security.oauth2.provider.OAuthJoseJwtProducer">
+		<property name="JweRequired" value="true" />
+	</bean>
+
+	<bean id="oauth2DAO" class="ca.sgicanada.security.dao.OAuth2DAO" />
+
+	<!-- ldapUtils -->
+	<bean id="ldapProperties"
+	      class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+	  <property name="locations">
+	    <list>
+	      <value>classpath:ldap.properties</value>
+	    </list>
+	  </property>
+	</bean>
+	
+	<!-- ${access.token.lifetime} ${refresh.token.lifetime} -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:oauth.properties"/>
+        <property name="fileEncoding" value="UTF-8" />
+    </bean>
+
+
+
+	<!-- <bean id="ldapUtils" class="ca.sgicanada.util.LDAPUtils"/> -->
+
+	<!-- CXF Oauth2 SGI data provider customization needs to be done in this 
+		class -->
+	<bean id="sgiOAuthDataProvider" class="ca.sgicanada.security.oauth2.OAuth2DataProviderImpl"
+		init-method="init" destroy-method="close">
+		<property name="oauth2DAO" ref="oauth2DAO" />
+		<!-- <property name="ldapUtils" ref="ldapUtils"/>  -->
+		<!--property name="entityManagerFactory" ref="entityManagerFactory"/ -->
+		<property name="supportedScopes" ref="supportedScopes" />
+		<!-- List of scopes that the consent/authorization form should make selected 
+			by default. For example, asking a user to do an extra click to approve an 
+			"sgi api access" scope is a redundant operation because this scope is required 
+			anyway. -->
+		<property name="defaultScopes" ref="coreScopes" />
+		<property name="invisibleToClientScopes" ref="invisibleToClientScopes" />
+		<property name="accessTokenLifetime" value="${access.token.lifetime}" />
+		<!-- If below value not specified then by default refresh token are eternal -->
+		<property name="refreshTokenLifetime" value="${refresh.token.lifetime}" />
+		<property name="useJwtFormatForAccessTokens" value="true" />
+		<!--property name="storeJwtTokenKeyOnly" value="true"/ -->
+		<property name="supportPreauthorizedTokens" value="false" />
+		<property name="jwtAccessTokenProducer" ref="oauthJwtAccessTokenProducer"></property>
+	</bean>
+
+	<!-- CXF Oauth2 Grant Handlers -->
+	<bean id="refreshTokenGrantHandler"
+		class="org.apache.cxf.rs.security.oauth2.grants.refresh.RefreshTokenGrantHandler">
+		<property name="dataProvider" ref="sgiOAuthDataProvider" />
+	</bean>
+	<bean id="authorizationCodeGrantHandler"
+		class="org.apache.cxf.rs.security.oauth2.grants.code.AuthorizationCodeGrantHandler">
+		<property name="dataProvider" ref="sgiOAuthDataProvider" />
+		<property name="canSupportPublicClients" value="true" />
+	</bean>
+	<bean id="clientCredentialsGrantHandler"
+		class="ca.sgicanada.security.oauth2.CustomClientCredentialGrantHandler">
+		<property name="dataProvider" ref="sgiOAuthDataProvider" />
+	</bean>
+	<bean id="jwtBearerGrantHandler"
+		class="org.apache.cxf.rs.security.oauth2.grants.jwt.JwtBearerGrantHandler">
+		<property name="dataProvider" ref="sgiOAuthDataProvider" />
+	</bean>
+	<bean id="resourceOwnerGrantHandler"
+		class="org.apache.cxf.rs.security.oauth2.grants.owner.ResourceOwnerGrantHandler">
+		<property name="dataProvider" ref="sgiOAuthDataProvider" />
+	</bean>
+
+	<util:list id="grantHandlers">
+		<ref bean="authorizationCodeGrantHandler" />
+		<ref bean="refreshTokenGrantHandler" />
+		<ref bean="clientCredentialsGrantHandler" />
+		<ref bean="jwtBearerGrantHandler" />
+		<!-- Add more custom grant handlers as needed -->
+	</util:list>
+
+
+	<!-- CXF Oauth2 Services Start -->
+	<!-- Third Party Client Registration service: http://<IP>:<PORT>/GISAuthServer/services/oauth2/register -->
+	<bean id="dynamicRegistrationService"
+		class="org.apache.cxf.rs.security.oauth2.services.DynamicRegistrationService">
+		<property name="clientProvider" ref="sgiOAuthDataProvider" />
+		<property name="initialAccessToken" value="${sgi.client.registration.access.token}" />
+	</bean>
+
+	<!-- To display resource owner user name in Authorization Grant JSP/View 
+		page -->
+	<bean id="defaultResourceOwnerNameProvider"
+		class="org.apache.cxf.rs.security.oauth2.provider.DefaultResourceOwnerNameProvider" />
+
+	<!-- To check existing user for server auth code grants -->
+	<bean id="idpSubjectCreator" class="ca.sgicanada.security.oauth2.IDPSubjectCreator">
+		<property name="oauth2DAO" ref="oauth2DAO" />
+	</bean>
+
+	<!-- To store session authenticity token in DB as we are running active/active 
+		server in production -->
+	<bean id="idpSessionAuthenticityTokenProvider"
+		class="ca.sgicanada.security.oauth2.IDPSessionAuthenticityTokenProvider">
+		<property name="oauth2DAO" ref="oauth2DAO" />
+		<property name="replayToUrl" value="${sgi.oauth2.replyto.url}" />
+	</bean>
+	
+	<!-- Authorization Code service: http://<IP>:<PORT>/GISAuthServer/services/idp/authorize -->
+	<!-- <bean id="authCodeGrantService"
+		class="org.apache.cxf.rs.security.oauth2.services.AuthorizationCodeGrantService"> -->
+	<bean id="authCodeGrantService"
+		class="ca.sgicanada.security.service.AuthorizationCodeGrantServiceTest">
+		<property name="dataProvider" ref="sgiOAuthDataProvider" />
+		<property name="resourceOwnerNameProvider" ref="defaultResourceOwnerNameProvider" />
+		<property name="subjectCreator" ref="idpSubjectCreator" />
+		<property name="canSupportPublicClients" value="true" />
+		<property name="canSupportEmptyRedirectForPrivateClients"
+			value="true" />
+		<property name="sessionAuthenticityTokenProvider" ref="idpSessionAuthenticityTokenProvider" />
+	</bean>
+
+	<!-- Authorization Code Implicit service: http://<IP>:<PORT>/GISAuthServer/services/idp/authorize-implicit -->
+	<bean id="implicitService"
+		class="org.apache.cxf.rs.security.oauth2.services.ImplicitGrantService">
+		<property name="dataProvider" ref="sgiOAuthDataProvider" />
+		<property name="subjectCreator" ref="idpSubjectCreator" />
+		<property name="sessionAuthenticityTokenProvider" ref="idpSessionAuthenticityTokenProvider" />
+	</bean>
+
+	<!-- Putting in utility list so we get common end point -->
+	<util:list id="servicesList">
+		<ref bean="authCodeGrantService" />
+		<ref bean="implicitService" />
+	</util:list>
+
+	<!-- Authorization Code decision service: http://<IP>:<PORT>/GISAuthServer/services/idp/authorize/decision -->
+	<bean id="authorizationService"
+		class="org.apache.cxf.rs.security.oauth2.services.AuthorizationService">
+		<property name="services" ref="servicesList" />
+	</bean>
+
+	<!-- Access Token Service: http://<IP>:<PORT>/GISAuthServer/services/oauth2/token -->
+	<!-- <bean id="accessTokenService"
+		class="org.apache.cxf.rs.security.oauth2.services.AccessTokenService"> -->
+	<bean id="accessTokenService"
+		class="ca.sgicanada.security.service.AccessTokenServiceTest">
+		<property name="dataProvider" ref="sgiOAuthDataProvider" />
+		<property name="grantHandlers" ref="grantHandlers" />
+		<property name="canSupportPublicClients" value="true" />
+		<property name="writeCustomErrors" value="true" />
+	</bean>
+
+	
+
+
+	<!-- Access Token Validation service used by clients: http://<IP>:<PORT>/GISAuthServer/services/oauth2/validate -->
+	<bean id="accessTokenValidateService"
+		class="org.apache.cxf.rs.security.oauth2.services.AccessTokenValidatorService">
+		<property name="dataProvider" ref="sgiOAuthDataProvider" />
+		<property name="blockUnauthorizedRequests" value="true" />
+	</bean>
+
+	<!-- Access Token Introspection service: http://<IP>:<PORT>/GISAuthServer/services/oauth2/introspect -->
+	<bean id="accessTokenIntrospectionService"
+		class="org.apache.cxf.rs.security.oauth2.services.TokenIntrospectionService">
+		<property name="dataProvider" ref="sgiOAuthDataProvider" />
+		<property name="blockUnauthorizedRequests" value="false" />
+	</bean>
+
+
+	<!-- Access Token Revocation service: http://<IP>:<PORT>/GISAuthServer/services/oauth2/revoke -->
+	<bean id="accessTokenRevocationService"
+		class="org.apache.cxf.rs.security.oauth2.services.TokenRevocationService">
+		<property name="dataProvider" ref="sgiOAuthDataProvider" />
+	</bean>
+
+	<!-- CXF Oauth2 Services End -->
+
+	<!-- Providers Start -->
+	<bean id="oauthJsonProvider" class="org.apache.cxf.rs.security.oauth2.provider.OAuthJSONProvider" />
+	<bean id="jacksonJsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+	<bean id="oobResponseProvider" class="ca.sgicanada.security.oauth2.OOBResponseProvider" />
+
+	<!-- security context is used to authenticate end user/resource owner -->
+	<bean id="userSecurityContext" class="ca.sgicanada.security.oauth2.SecurityContextFilter">
+		<property name="userAccounts" ref="users" />
+	</bean>
+
+	<!-- Authorization decision page -->
+	<bean id="codeGrantAuthorizeView" class="org.apache.cxf.jaxrs.provider.RequestDispatcherProvider">
+		<property name="locationPrefix" value="/WEB-INF/views/" />
+		<property name="classResources">
+			<map>
+				<entry
+					key="org.apache.cxf.rs.security.oauth2.common.OAuthAuthorizationData"
+					value="WEB-INF/views/oauth2Authorize.jsp" />
+				<entry
+					key="org.apache.cxf.rs.security.oauth2.common.ClientAccessToken"
+					value="oauthServer.jsp" />	
+			</map>
+		</property>
+		<property name="logRedirects" value="true" />
+	</bean>
+	
+	
+	<!-- <bean id="dispatchProvider" class="org.apache.cxf.jaxrs.provider.RequestDispatcherProvider">
+        <property name="classResources">
+            <map>
+                <entry key="org.apache.cxf.rs.security.oauth2.common.OAuthAuthorizationData" value="/oauth2/implicitauthorize"/>
+            </map>
+        </property>
+        <property name="beanNames">
+            <map>
+                <entry key="org.apache.cxf.rs.security.oauth2.common.OAuthAuthorizationData" value="data"/>
+            </map>
+        </property>
+        <property name="logRedirects" value="true"/>
+    </bean> -->
+    
+    
+	<!-- Private key password provider. it is used only if rs.security.key.password 
+		is not defined -->
+	<bean id="keyPasswordProvider"
+		class="ca.sgicanada.security.oauth2.PrivateKeyPasswordProviderImpl" />
+	<!-- Providers End -->
+
+
+	<jaxrs:server id="idpServer" address="/idp">
+		<jaxrs:serviceBeans>
+			<ref bean="authorizationService"/> <!-- authorize -->
+			<ref bean="accessTokenService" /><!-- /token1 -->
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+		   <ref bean="jacksonJsonProvider"/>
+           <ref bean="oauthJsonProvider"/>
+           <ref bean="oobResponseProvider"/>
+           <ref bean="codeGrantAuthorizeView"/>
+           <ref bean="userSecurityContext"/>
+        </jaxrs:providers>
+        <jaxrs:properties>
+        	<entry key="rs.security.signature.properties" value="classpath:rs.security.properties"/>
+            <entry key="rs.security.encryption.properties" value="classpath:rs.security.properties"/>
+            <entry key="rs.security.signature.key.password.provider" value-ref="keyPasswordProvider"/>
+            <entry key="rs.security.decryption.key.password.provider" value-ref="keyPasswordProvider"/>
+            
+    	    <!-- <entry key="rs.security.signature.in.properties" value="classpath:rs.security.properties"/> 
+ 	    	<entry key="rs.security.signature.key.password.provider" value-ref="keyPasswordProvider"/>  -->            
+    	                
+            <!-- <entry key="rs.security.signature.properties" value="file:${jboss.home.dir}/SGIstuff/${jboss.server.name}/GISAuthServer.properties"/>
+            <entry key="rs.security.encryption.properties" value="file:${jboss.home.dir}/SGIstuff/${jboss.server.name}/GISAuthServer.properties"/>
+            <entry key="rs.security.signature.key.password.provider" value-ref="keyPasswordProvider"/>
+            <entry key="rs.security.decryption.key.password.provider" value-ref="keyPasswordProvider"/> -->
+        </jaxrs:properties>
+	</jaxrs:server>
+
+	<!-- CXF Message logging -->
+    <!-- <cxf:bus>
+        <cxf:features>
+            <cxf:logging/>
+        </cxf:features>
+    </cxf:bus> --> 
+</beans>

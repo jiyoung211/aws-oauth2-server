@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:cxf="http://cxf.apache.org/core" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+	http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+	http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd	
+	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://cxf.apache.org/ws/addressing http://cxf.apache.org/schemas/ws/addressing.xsd
+    http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd"	
+	xmlns:wsa="http://cxf.apache.org/ws/addressing"
+	xmlns:http="http://cxf.apache.org/transports/http/configuration">
+	<!-- cvc-complex-type.2.4.c: 일치하는 와일드 카드 문자가 엄격하게 적용되지만 'http:conduit' 요소에 대한 선언을 찾을 수 없습니다. 
+	xmlns:wsa , xmlns:http , xsi:schemaLocation 추가
+	-->
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	
+	<!-- JAX-RS -->	
+	<bean id="myApp" class="com.gaurang.api.HelloWorld"/>
+	
+	<bean id="jwtTokenValidator" class="org.apache.cxf.rs.security.oauth2.filters.JwtAccessTokenValidator">
+		<property name="JweRequired" value="true" />
+	</bean> 
+	
+	<bean id="oauthFilter" class="org.apache.cxf.rs.security.oauth2.filters.OAuthRequestFilter">
+	    <property name="tokenValidator" ref="jwtTokenValidator"/>
+	</bean>
+	
+	<!-- OAuth API REST-->	
+	<jaxrs:server id="apiServices" address="/restOauth">
+		<jaxrs:serviceBeans>
+			<ref bean="myApp"/>
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+			<ref bean="oauthFilter"/>
+		</jaxrs:providers>
+		<jaxrs:properties>	
+			<entry key="rs.security.signature.in.properties" value="classpath:rs.security.properties"/> 
+	        <entry key="rs.security.keystore.type" value="jks"/>
+			<entry key="rs.security.keystore.password" value="password"/>
+			<entry key="rs.security.keystore.alias" value="alice"/>
+			<entry key="rs.security.keystore.file" value="alice.jks"/>
+			<entry key="rs.security.encryption.content.algorithm" value="A128GCM"/>
+			<entry key="rs.security.encryption.key.algorithm" value="RSA-OAEP"/>
+			<entry key="rs.security.signature.algorithm" value="RS256"/>
+			<entry key="rs.security.key.password" value="password"/>
+			<entry key="rs.security.signature.key.password.provider" value-ref="keyPasswordProvider"/> 
+	    </jaxrs:properties>  
+	</jaxrs:server>
+	
+	<!-- OAuth API Soap-->	
+	 <bean id="oAuthRequestInterceptor" class="org.apache.cxf.rs.security.oauth2.filters.OAuthRequestInterceptor">
+	    <property name="tokenValidator" ref="jwtTokenValidator"/>
+	</bean>
+	
+	 <jaxws:endpoint id="myLocation" implementor="example.webserice.LocationServiceEndpoint"
+	wsdlLocation="/WEB-INF/wsdl/cxfSoap.wsdl" address="/soapOauth" >
+		 <jaxws:inInterceptors>
+              <ref bean="oAuthRequestInterceptor" />
+          </jaxws:inInterceptors> 
+          <jaxws:properties>	
+	        <entry key="rs.security.keystore.type" value="jks"/>
+			<entry key="rs.security.keystore.password" value="password"/>
+			<entry key="rs.security.keystore.alias" value="alice"/>
+			<entry key="rs.security.keystore.file" value="alice.jks"/>
+			<entry key="rs.security.encryption.content.algorithm" value="A128GCM"/>
+			<entry key="rs.security.encryption.key.algorithm" value="RSA-OAEP"/>
+			<entry key="rs.security.signature.algorithm" value="RS256"/>
+			<entry key="rs.security.key.password" value="password"/>
+	    </jaxws:properties>
+	</jaxws:endpoint>
+	
+	
+	<!-- JAX-RS -->	
+    <jaxrs:server id="apiServices" address="/rest">
+		<jaxrs:serviceBeans>
+			<ref bean="myApp"/>
+		</jaxrs:serviceBeans>
+	</jaxrs:server>
+	
+	<!-- JAX-WS -->	
+	 <jaxws:endpoint id="myLocation" implementor="example.webserice.LocationServiceEndpoint"
+		wsdlLocation="/WEB-INF/wsdl/cxfSoap.wsdl" address="/soap" >
+	</jaxws:endpoint>
+
+	<!-- <jaxws:endpoint id="myLocation" implementor="#locationService" address="/soap" />  -->
+	
+	
+	<bean id="myPasswordCallback" class="demo.wssec.server.UTPasswordCallback"/>
+
+	<!-- WS-Security SERVER -->
+	<jaxws:endpoint id="myWsSecServer"
+	   implementor="demo.wssec.server.GreeterImpl"
+	   address="/GreeterPort">
+	   <jaxws:inInterceptors>
+	      <bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+	         <constructor-arg>
+	            <map>
+	               <entry key="action" value="UsernameToken Timestamp Signature Encrypt"/>
+	               <entry key="passwordType" value="PasswordDigest"/>
+	               <entry key="passwordCallbackRef">
+	                  <ref bean="myPasswordCallback"/>
+	               </entry>
+            	   <entry key="decryptionPropFile" value="etc/Server_Decrypt.properties"/>
+            	   <entry key="encryptionKeyIdentifier" value="IssuerSerial"/>
+	               <entry key="signaturePropFile" value="etc/Server_SignVerf.properties"/>
+            	   <entry key="signatureKeyIdentifier" value="DirectReference"/>
+            	   <entry key="encryptionKeyTransportAlgorithm" value="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>
+            	   <entry key="signatureAlgorithm" value="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+	            </map>
+	         </constructor-arg>
+	      </bean>
+	     <bean class="org.apache.cxf.ws.security.wss4j.DefaultCryptoCoverageChecker" /> 
+	     <bean class="demo.wssec.common.SaveLoggingInInterceptor" /> 
+	   </jaxws:inInterceptors> 
+	   
+	   <jaxws:outInterceptors>
+	      <bean class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor">
+	         <constructor-arg>
+	            <map>
+	               <entry key="action" value="UsernameToken Timestamp Signature Encrypt"/>
+	               <entry key="passwordType" value="PasswordText"/>
+	               <entry key="passwordCallbackRef">
+	                  <ref bean="myPasswordCallback"/>
+	               </entry>
+                   <entry key="user" value="Alice"/>
+                   <entry key="signatureUser" value="morpit"/>
+                   <entry key="encryptionUser" value="bethal"/>
+            	   <entry key="encryptionPropFile" value="etc/Server_SignVerf.properties"/>
+            	   <entry key="encryptionKeyIdentifier" value="IssuerSerial"/>
+            	   <entry key="encryptionParts" value="{Element}{http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd}UsernameToken;{Content}{http://schemas.xmlsoap.org/soap/envelope/}Body"/>
+	               <entry key="signaturePropFile" value="etc/Server_Decrypt.properties"/>
+            	   <entry key="signatureKeyIdentifier" value="DirectReference"/>
+            	   <entry key="signatureParts" value="{Element}{http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd}Timestamp;{Element}{http://schemas.xmlsoap.org/soap/envelope/}Body"/>
+            	   <entry key="encryptionKeyTransportAlgorithm" value="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>
+            	   <entry key="signatureAlgorithm" value="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+	            </map>
+	         </constructor-arg>
+	      </bean>
+    	  <bean class="demo.wssec.common.SaveLoggingOutInterceptor" /> 
+	   </jaxws:outInterceptors> 
+	   
+	</jaxws:endpoint> 
+
+
+	<!-- <jaxws:endpoint id="myWsSecServer"
+	   implementor="demo.wssec.server.GreeterImpl"
+	   address="/GreeterPortTest">
+	   
+	</jaxws:endpoint>  -->
+	
+	<!-- JaxWsServiceFactoryBean TESG -->
+	<!-- <bean id="serviceFactory" class="org.apache.cxf.jaxws.support.JaxWsServiceFactoryBean">
+    	<property name="wrapped" value="true" />
+    </bean>
+
+	  <bean id="myWsSecClient" class="org.apache.cxf.hello_world_soap_http.Greeter"
+	    factory-bean="proxyFactory" factory-method="create"/> -->
+	    
+	    
+	    
+	<!-- WS-Security Client TEST -->
+	<!-- <jaxws:client name="{http://cxf.apache.org/hello_world_soap_http}GreeterService" createdFromAPI="true" >  -->
+	<!-- <jaxws:client id="myWsSecClient"
+	   serviceClass="org.apache.cxf.hello_world_soap_http.Greeter"
+	   address="/GreeterPort">
+	    <jaxws:inInterceptors>
+	      <bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+	         <constructor-arg>
+	            <map>
+	               <entry key="action" value="UsernameToken Timestamp Signature Encrypt"/>
+	               <entry key="passwordType" value="PasswordText"/>
+	               <entry key="passwordCallbackRef">
+	                  <ref bean="myPasswordCallback"/>
+	               </entry>
+            	   <entry key="decryptionPropFile" value="etc/Client_Sign.properties"/>
+            	   <entry key="encryptionKeyIdentifier" value="IssuerSerial"/>
+	               <entry key="signaturePropFile" value="etc/Client_Encrypt.properties"/>
+            	   <entry key="signatureKeyIdentifier" value="DirectReference"/>
+            	   <entry key="encryptionKeyTransportAlgorithm" value="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>
+            	   <entry key="signatureAlgorithm" value="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+	            </map>
+	         </constructor-arg>
+	      </bean>
+	     <bean class="org.apache.cxf.ws.security.wss4j.DefaultCryptoCoverageChecker" />
+	   </jaxws:inInterceptors>
+	   
+	   <jaxws:outInterceptors>
+	      <bean class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor">
+	         <constructor-arg>
+	            <map>
+	               <entry key="action" value="UsernameToken Timestamp Signature Encrypt"/>
+	               <entry key="passwordType" value="PasswordDigest"/>
+	               <entry key="passwordCallbackRef">
+	                  <ref bean="myPasswordCallback"/>
+	               </entry>
+                   <entry key="user" value="abcd"/>
+                   <entry key="signatureUser" value="bethal"/>
+                   <entry key="encryptionUser" value="morpit"/>
+            	   <entry key="encryptionPropFile" value="etc/Client_Encrypt.properties"/>
+            	   <entry key="encryptionKeyIdentifier" value="IssuerSerial"/>
+            	   <entry key="encryptionParts" value="{Element}{http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd}UsernameToken;{Content}{http://schemas.xmlsoap.org/soap/envelope/}Body"/>
+	               <entry key="signaturePropFile" value="etc/Client_Sign.properties"/>
+            	   <entry key="signatureKeyIdentifier" value="DirectReference"/>
+            	   <entry key="signatureParts" value="{Element}{http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd}Timestamp;{Element}{http://schemas.xmlsoap.org/soap/envelope/}Body;{}{http://www.w3.org/2005/08/addressing}ReplyTo;"/>
+            	   <entry key="encryptionKeyTransportAlgorithm" value="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>
+            	   <entry key="signatureAlgorithm" value="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+	            </map>
+	         </constructor-arg>
+	      </bean>
+	   </jaxws:outInterceptors>
+	   
+	</jaxws:client> -->
+	
+
+    
+	<bean class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor" id="TimestampSignEncrypt_Request">
+	        <constructor-arg>
+	            <map>
+	               <entry key="action" value="UsernameToken Timestamp Signature Encrypt"/>
+	               <entry key="passwordType" value="PasswordText"/>
+	               <entry key="passwordCallbackRef">
+	                  <ref bean="myPasswordCallback"/>
+	               </entry>
+                   <entry key="user" value="Alice"/>
+                   <entry key="signatureUser" value="morpit"/>
+                   <entry key="encryptionUser" value="bethal"/>
+            	   <entry key="encryptionPropFile" value="etc/Server_SignVerf.properties"/>
+            	   <entry key="encryptionKeyIdentifier" value="IssuerSerial"/>
+            	   <entry key="encryptionParts" value="{Element}{http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd}UsernameToken;{Content}{http://schemas.xmlsoap.org/soap/envelope/}Body"/>
+	               <entry key="signaturePropFile" value="etc/Server_Decrypt.properties"/>
+            	   <entry key="signatureKeyIdentifier" value="DirectReference"/>
+            	   <entry key="signatureParts" value="{Element}{http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd}Timestamp;{Element}{http://schemas.xmlsoap.org/soap/envelope/}Body"/>
+            	   <entry key="encryptionKeyTransportAlgorithm" value="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>
+            	   <entry key="signatureAlgorithm" value="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+	            </map>
+	         </constructor-arg>
+	      </bean>
+	      
+    <!--   
+        This bean is an In interceptor which will validate a signed,   
+         encrypted response, and timestamp it.   
+    -->
+     <bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor"  id="TimestampSignEncrypt_Response">
+	         <constructor-arg>
+	            <map>
+	               <entry key="action" value="UsernameToken Timestamp Signature Encrypt"/>
+	               <entry key="passwordType" value="PasswordDigest"/>
+	               <entry key="passwordCallbackRef">
+	                  <ref bean="myPasswordCallback"/>
+	               </entry>
+            	   <entry key="decryptionPropFile" value="etc/Server_Decrypt.properties"/>
+            	   <entry key="encryptionKeyIdentifier" value="IssuerSerial"/>
+	               <entry key="signaturePropFile" value="etc/Server_SignVerf.properties"/>
+            	   <entry key="signatureKeyIdentifier" value="DirectReference"/>
+            	   <entry key="encryptionKeyTransportAlgorithm" value="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>
+            	   <entry key="signatureAlgorithm" value="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+	            </map>
+	         </constructor-arg>
+	      </bean>
+    
+    	 <bean id="proxyFactory"
+		    class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+		    <property name="serviceClass" value="org.apache.cxf.hello_world_soap_http.Greeter"/>
+		    <property name="address" value="http://localhost:7070/services/GreeterPort"/><!--  jaxws endpoint url???? -->
+		    <property name="inInterceptors">
+	         <list>
+	            <ref bean="TimestampSignEncrypt_Response"/>
+	         </list>
+	       </property>
+	       <property name="outInterceptors">
+	         <list>
+	            <ref bean="TimestampSignEncrypt_Request"/>
+	         </list>
+	       </property>
+		  </bean>
+		  
+	  <bean id="myWsSecClient" class="org.apache.cxf.hello_world_soap_http.Greeter"
+	    factory-bean="proxyFactory" factory-method="create"/>
+
+	<!-- Caused by: org.apache.wss4j.common.ext.WSSecurityException: An error was discovered processing the <wsse:Security> header -->
+	 
+	 <cxf:bus>
+        <cxf:features>
+            <cxf:logging/>
+            <wsa:addressing/>
+        </cxf:features>
+    </cxf:bus>
+    
+    <!-- sing_enc project에서는 성공 -->
+     <!-- <http:conduit name="{http://cxf.apache.org/hello_world_soap_http}GreeterPort.http-conduit">
+        <http:client DecoupledEndpoint="http://localhost:9990/decoupled_endpoint"/>
+    </http:conduit> -->
+    
+    
+</beans>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
+    <display-name>JAX-RS Simple Service</display-name>
+    <description>JAX-RS Simple Service</description>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+        	/WEB-INF/beansOauth.xml
+         	/WEB-INF/beansApi.xml
+        	/WEB-INF/beansClient.xml 
+        	classpath:applicationContext*.xml
+    	   <!--  /WEB-INF/beansWssecClient.xml
+    	    /WEB-INF/beansWssecServer.xml -->
+       	</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+	<!-- SAAJ Controller -->
+	 <servlet>
+	   <servlet-name>spring</servlet-name>
+	   <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	   <load-on-startup>1</load-on-startup>
+	 </servlet>
+	 <servlet-mapping>
+	   <servlet-name>spring</servlet-name>
+	   <url-pattern>/app/*</url-pattern>
+	 </servlet-mapping> 
+	 
+    <servlet>
+	    <description>Apache CXF Endpoint</description>
+	    <display-name>cxf</display-name>
+	    <servlet-name>cxf</servlet-name>
+	    <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+	    <load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>cxf</servlet-name>
+	    <url-pattern>/services/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+   	 	<servlet-name>oauth.jsp</servlet-name>
+	    <jsp-file>/oauth.jsp</jsp-file>
+   	    <load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>oauth.jsp</servlet-name>
+	    <url-pattern>/oauth</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+        <welcome-file>main.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

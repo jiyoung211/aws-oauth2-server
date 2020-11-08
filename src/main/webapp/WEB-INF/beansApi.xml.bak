@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:cxf="http://cxf.apache.org/core" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+	http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+	http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd	
+	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://cxf.apache.org/ws/addressing http://cxf.apache.org/schemas/ws/addressing.xsd
+    http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd"	
+	xmlns:wsa="http://cxf.apache.org/ws/addressing"
+	xmlns:http="http://cxf.apache.org/transports/http/configuration">
+	<!-- cvc-complex-type.2.4.c: 일치하는 와일드 카드 문자가 엄격하게 적용되지만 'http:conduit' 요소에 대한 선언을 찾을 수 없습니다. 
+	xmlns:wsa , xmlns:http , xsi:schemaLocation 추가
+	-->
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	
+	<!-- JAX-RS -->	
+	<bean id="myApp" class="com.gaurang.api.HelloWorld"/>
+	
+	<bean id="jwtTokenValidator" class="org.apache.cxf.rs.security.oauth2.filters.JwtAccessTokenValidator">
+		<property name="JweRequired" value="true" />
+	</bean> 
+	
+	<bean id="oauthFilter" class="org.apache.cxf.rs.security.oauth2.filters.OAuthRequestFilter">
+	    <property name="tokenValidator" ref="jwtTokenValidator"/>
+	</bean>
+	
+    <jaxrs:server id="apiServices" address="/api">
+		<jaxrs:serviceBeans>
+			<ref bean="myApp"/>
+		</jaxrs:serviceBeans>
+		<!-- <jaxrs:providers>
+			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
+			<ref bean="oauthFilter"/>
+		</jaxrs:providers>
+		<jaxrs:properties>	
+			<entry key="rs.security.signature.in.properties" value="classpath:rs.security.properties"/> 
+	        <entry key="rs.security.keystore.type" value="jks"/>
+			<entry key="rs.security.keystore.password" value="password"/>
+			<entry key="rs.security.keystore.alias" value="alice"/>
+			<entry key="rs.security.keystore.file" value="alice.jks"/>
+			<entry key="rs.security.encryption.content.algorithm" value="A128GCM"/>
+			<entry key="rs.security.encryption.key.algorithm" value="RSA-OAEP"/>
+			<entry key="rs.security.signature.algorithm" value="RS256"/>
+			<entry key="rs.security.key.password" value="password"/>
+			<entry key="rs.security.signature.key.password.provider" value-ref="keyPasswordProvider"/> 
+	    </jaxrs:properties>  -->
+	</jaxrs:server>
+	
+	<!-- JAX-WS -->	
+	 <bean id="oAuthRequestInterceptor" class="org.apache.cxf.rs.security.oauth2.filters.OAuthRequestInterceptor">
+	    <property name="tokenValidator" ref="jwtTokenValidator"/>
+	</bean>
+	
+	 <jaxws:endpoint id="myLocation" implementor="example.webserice.LocationServiceEndpoint"
+	wsdlLocation="/WEB-INF/wsdl/cxfSoap.wsdl" address="/soap" >
+		 <!-- <jaxws:inInterceptors>
+              <ref bean="oAuthRequestInterceptor" />
+          </jaxws:inInterceptors> -->
+          <jaxws:properties>	
+	        <entry key="rs.security.keystore.type" value="jks"/>
+			<entry key="rs.security.keystore.password" value="password"/>
+			<entry key="rs.security.keystore.alias" value="alice"/>
+			<entry key="rs.security.keystore.file" value="alice.jks"/>
+			<entry key="rs.security.encryption.content.algorithm" value="A128GCM"/>
+			<entry key="rs.security.encryption.key.algorithm" value="RSA-OAEP"/>
+			<entry key="rs.security.signature.algorithm" value="RS256"/>
+			<entry key="rs.security.key.password" value="password"/>
+	    </jaxws:properties>
+	</jaxws:endpoint>
+
+	<!-- <jaxws:endpoint id="myLocation" implementor="#locationService" address="/soap" />  -->
+    
+</beans>

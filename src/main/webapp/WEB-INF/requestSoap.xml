@@ -1,0 +1,6 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://webservice.cxfexample.exampledriven.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <web:readAllLocations/>
+   </soapenv:Body>
+</soapenv:Envelope>

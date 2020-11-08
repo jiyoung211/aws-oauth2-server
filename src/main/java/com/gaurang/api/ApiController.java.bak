@@ -1,0 +1,31 @@
+package com.gaurang.api ;
+
+import javax.ws.rs.GET ;
+import javax.ws.rs.Path ;
+import javax.ws.rs.PathParam ;
+import javax.ws.rs.Produces ;
+
+@Path("/")
+public class ApiController
+{
+
+  @GET
+  @Path("/oauth")
+  @Produces("text/plain")
+  public String oauth(@PathParam("code") String code, @PathParam("state") String state)
+  {
+    System.out.println("API oauth controller code:" + code + ", state: " + state) ;
+    return code ;
+  }
+
+  // @POST
+  // @Produces("application/json")
+  // @Consumes("application/json")
+  // @Path("/jsonBean")
+  // public Response modifyJson(JsonBean input)
+  // {
+  //
+  // input.setVal2(input.getVal1()) ;
+  // return Response.ok().entity(input).build() ;
+  // }
+}

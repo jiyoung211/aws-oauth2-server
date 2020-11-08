@@ -1,0 +1,29 @@
+package example.swagger ;
+
+import org.springframework.context.annotation.Configuration ;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity ;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter ;
+
+@Configuration
+// @EnableWebSecurity
+public class SpringSecConfig extends WebSecurityConfigurerAdapter
+{
+  // private static final String[] AUTH_WHITELIST = {
+  // // -- swagger ui
+  // "/swagger-resources/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**"
+  // } ;
+
+  @Override
+  protected void configure(HttpSecurity httpSecurity) throws Exception
+  {
+    // System.out.println("#### SpringSecConfig configure") ;
+    // httpSecurity.authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll().antMatchers("/**/*").denyAll()
+    // ;
+
+    httpSecurity.authorizeRequests().antMatchers("/", "/swagger-resources", "/api/**", "/swagger-ui.html", "/webjars/**", "/v2/**", "/swagger-resources/**").permitAll() ;
+    httpSecurity.csrf().disable() ;
+    httpSecurity.headers().frameOptions().disable() ;
+
+  }
+
+}

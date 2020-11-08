@@ -1,0 +1,257 @@
+<wsdl:definitions xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+xmlns:tns="http://webservice.cxfexample.exampledriven.org/" 
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+name="LocationServiceEndpointService" targetNamespace="http://webservice.cxfexample.exampledriven.org/">
+<wsdl:types>
+<xs:schema xmlns:tns="http://webservice.cxfexample.exampledriven.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://webservice.cxfexample.exampledriven.org/">
+<xs:element name="Exception" type="tns:exceptionData"/>
+<xs:element name="LocationData" type="tns:locationData"/>
+<xs:element name="createLocation" type="tns:createLocation"/>
+<xs:element name="createLocationResponse" type="tns:createLocationResponse"/>
+<xs:element name="deleteAllLocation" type="tns:deleteAllLocation"/>
+<xs:element name="deleteAllLocationResponse" type="tns:deleteAllLocationResponse"/>
+<xs:element name="deleteLocation" type="tns:deleteLocation"/>
+<xs:element name="deleteLocationResponse" type="tns:deleteLocationResponse"/>
+<xs:element name="readAllLocations" type="tns:readAllLocations"/>
+<xs:element name="readAllLocationsResponse" type="tns:readAllLocationsResponse"/>
+<xs:element name="readLocation" type="tns:readLocation"/>
+<xs:element name="readLocationResponse" type="tns:readLocationResponse"/>
+<xs:element name="updateorCreateLocation" type="tns:updateorCreateLocation"/>
+<xs:element name="updateorCreateLocationResponse" type="tns:updateorCreateLocationResponse"/>
+<xs:complexType name="deleteLocation">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="deleteLocationResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="exceptionData">
+<xs:sequence>
+<xs:element name="data">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="key" type="xs:string"/>
+<xs:element minOccurs="0" name="value" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element minOccurs="0" name="message" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="readLocation">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="readLocationResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:locationData"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="locationData">
+<xs:sequence>
+<xs:element minOccurs="0" name="date" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="id" type="xs:string"/>
+<xs:element minOccurs="0" name="location" type="xs:string"/>
+<xs:element minOccurs="0" name="timezone" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="readAllLocations">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="readAllLocationsResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:locationData"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="updateorCreateLocation">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="tns:locationData"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="updateorCreateLocationResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:locationData"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="deleteAllLocation">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="deleteAllLocationResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="createLocation">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="tns:locationData"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="createLocationResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:locationData"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="LocationNotFoundException" type="tns:LocationNotFoundException"/>
+<xs:complexType name="LocationNotFoundException">
+<xs:sequence>
+<xs:element nillable="true" ref="tns:Exception"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="DuplicateLocationException" type="tns:DuplicateLocationException"/>
+<xs:complexType name="DuplicateLocationException">
+<xs:sequence>
+<xs:element nillable="true" ref="tns:Exception"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="createLocationResponse">
+<wsdl:part element="tns:createLocationResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="readLocation">
+<wsdl:part element="tns:readLocation" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="updateorCreateLocation">
+<wsdl:part element="tns:updateorCreateLocation" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="DuplicateLocationException">
+<wsdl:part element="tns:DuplicateLocationException" name="DuplicateLocationException"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="readLocationResponse">
+<wsdl:part element="tns:readLocationResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="deleteAllLocation">
+<wsdl:part element="tns:deleteAllLocation" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="deleteAllLocationResponse">
+<wsdl:part element="tns:deleteAllLocationResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="deleteLocationResponse">
+<wsdl:part element="tns:deleteLocationResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="LocationNotFoundException">
+<wsdl:part element="tns:LocationNotFoundException" name="LocationNotFoundException"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="readAllLocationsResponse">
+<wsdl:part element="tns:readAllLocationsResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="deleteLocation">
+<wsdl:part element="tns:deleteLocation" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="readAllLocations">
+<wsdl:part element="tns:readAllLocations" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="updateorCreateLocationResponse">
+<wsdl:part element="tns:updateorCreateLocationResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="createLocation">
+<wsdl:part element="tns:createLocation" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:portType name="LocationService">
+<wsdl:operation name="deleteLocation">
+<wsdl:input message="tns:deleteLocation" name="deleteLocation"> </wsdl:input>
+<wsdl:output message="tns:deleteLocationResponse" name="deleteLocationResponse"> </wsdl:output>
+<wsdl:fault message="tns:LocationNotFoundException" name="LocationNotFoundException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="readLocation">
+<wsdl:input message="tns:readLocation" name="readLocation"> </wsdl:input>
+<wsdl:output message="tns:readLocationResponse" name="readLocationResponse"> </wsdl:output>
+<wsdl:fault message="tns:LocationNotFoundException" name="LocationNotFoundException"> </wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="readAllLocations">
+<wsdl:input message="tns:readAllLocations" name="readAllLocations"> </wsdl:input>
+<wsdl:output message="tns:readAllLocationsResponse" name="readAllLocationsResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="updateorCreateLocation">
+<wsdl:input message="tns:updateorCreateLocation" name="updateorCreateLocation"> </wsdl:input>
+<wsdl:output message="tns:updateorCreateLocationResponse" name="updateorCreateLocationResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="deleteAllLocation">
+<wsdl:input message="tns:deleteAllLocation" name="deleteAllLocation"> </wsdl:input>
+<wsdl:output message="tns:deleteAllLocationResponse" name="deleteAllLocationResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="createLocation">
+<wsdl:input message="tns:createLocation" name="createLocation"> </wsdl:input>
+<wsdl:output message="tns:createLocationResponse" name="createLocationResponse"> </wsdl:output>
+<wsdl:fault message="tns:DuplicateLocationException" name="DuplicateLocationException"> </wsdl:fault>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="LocationServiceEndpointServiceSoapBinding" type="tns:LocationService">
+<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="deleteLocation">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="deleteLocation">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="deleteLocationResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+<wsdl:fault name="LocationNotFoundException">
+<soap:fault name="LocationNotFoundException" use="literal"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="readLocation">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="readLocation">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="readLocationResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+<wsdl:fault name="LocationNotFoundException">
+<soap:fault name="LocationNotFoundException" use="literal"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="readAllLocations">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="readAllLocations">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="readAllLocationsResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="updateorCreateLocation">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="updateorCreateLocation">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="updateorCreateLocationResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="deleteAllLocation">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="deleteAllLocation">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="deleteAllLocationResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="createLocation">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="createLocation">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="createLocationResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+<wsdl:fault name="DuplicateLocationException">
+<soap:fault name="DuplicateLocationException" use="literal"/>
+</wsdl:fault>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="LocationServiceEndpointService">
+<wsdl:port binding="tns:LocationServiceEndpointServiceSoapBinding" name="LocationServiceEndpointPort">
+<soap:address location="http://localhost:7070/services/soap"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>
