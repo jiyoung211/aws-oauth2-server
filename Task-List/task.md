@@ -1,27 +1,30 @@
-# ÀÛ¾÷ ³»¿ª
+# ì‘ì—… ë‚´ì—­
 ## 201108
 
-**ssh key Ãæµ¹**
-
-Host key fingerprint is ssh-rsa 3072 1d:3b:82:0c:4d:36:e4:0e:ac:3b:d3:dc:c8:ff:23:6d. Authentication failed.
-
-**ssh key¸¦ »èÁ¦**
-ssh-keygen -R <¼­¹ö IP>
+**ssh key ì¶©ëŒ**
+* Host key fingerprint is ssh-rsa 3072 1d:3b:82:0c:4d:36:e4:0e:ac:3b:d3:dc:c8:ff:23:6d. Authentication failed.
 
 
-**/home/ec2-user/.ssh/authorized_keys**
+**ssh keyë¥¼ ì‚­ì œ**
+* ssh-keygen -R <ì„œë²„ IP>
 
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCAGIP7luQ0IZHnKaCo3m+xWlLSRUXQRBqVeOBfVpVRe4GFVEkNHKE7WSvtcbmgJnV9M+2WhaCP9aIqOyXoSDL+wxfpsSox2DHzR5nFTxK69OrSbcmZlczInFpEHHFMUlpCS/S7zCAeDBsxfunNKwbS9jgg5edUZ7dBVtRiv4FkUDSx1RSYDjGrNlpr6Qbe9QmJ/wHFFZ2hNt4BdYaOxlMoTNMHXN+Vz9ufLCQi36ZvF3Pg5KXJljzWdTGYAVfewFQ0cMs8PV48cJOvYBsnSJmJf+B7xrznyuntw9RmMG52u6K90bcFsUofjKVQXhASb/IP/DmCmraKhgcQM/NdM/Rl apigw
+* /home/ec2-user/.ssh/authorized_keys
+
+* ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCAGIP7luQ0IZHnKaCo3m+xWlLSRUXQRBqVeOBfVpVRe4GFVEkNHKE7WSvtcbmgJnV9M+2WhaCP9aIqOyXoSDL+wxfpsSox2DHzR5nFTxK69OrSbcmZlczInFpEHHFMUlpCS/S7zCAeDBsxfunNKwbS9jgg5edUZ7dBVtRiv4FkUDSx1RSYDjGrNlpr6Qbe9QmJ/wHFFZ2hNt4BdYaOxlMoTNMHXN+Vz9ufLCQi36ZvF3Pg5KXJljzWdTGYAVfewFQ0cMs8PV48cJOvYBsnSJmJf+B7xrznyuntw9RmMG52u6K90bcFsUofjKVQXhASb/IP/DmCmraKhgcQM/NdM/Rl apigw
+
 
 **pttygen** 
-key comment¿¡ key-pair ÀÌ¸§ ÀÔ·Â
+* key commentì— key-pair ì´ë¦„ ì…ë ¥
 
 
-**·çÆ®°èÁ¤ È°¼ºÈ­** 
->ÃâÃ³ : https://goddaehee.tistory.com/193
 
-**ec2 ÀÎ½ºÅÏ½º Áö¿ª º¯°æ**
-AWS EC2 ÀÎ½ºÅÏ½º Áö¿ª º¯°æÇÏ±â (ÀÌ¹ÌÁö¸¦ È°¿ëÇÑ ¹æ¹ı)
->ÃâÃ³: https://ndb796.tistory.com/257 [¾È°æÀâÀÌ°³¹ßÀÚ]
+**ë£¨íŠ¸ê³„ì • í™œì„±í™”** 
+>ì¶œì²˜ : https://goddaehee.tistory.com/193
+
+
+**ec2 ì¸ìŠ¤í„´ìŠ¤ ì§€ì—­ ë³€ê²½**
+* AWS EC2 ì¸ìŠ¤í„´ìŠ¤ ì§€ì—­ ë³€ê²½í•˜ê¸° (ì´ë¯¸ì§€ë¥¼ í™œìš©í•œ ë°©ë²•)
+>ì¶œì²˜: https://ndb796.tistory.com/257 [ì•ˆê²½ì¡ì´ê°œë°œì]
+
 
 
