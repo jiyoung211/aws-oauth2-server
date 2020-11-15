@@ -17,135 +17,149 @@
  * under the License.
  */
 
-package demo.wssec.server ;
+package demo.wssec.server;
 
-import java.net.URL ;
-import java.util.HashMap ;
-import java.util.Map ;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.xml.ws.Endpoint ;
+import javax.xml.ws.Endpoint;
 
-import org.apache.cxf.Bus ;
-import org.apache.cxf.BusFactory ;
-import org.apache.cxf.bus.spring.SpringBusFactory ;
-import org.apache.cxf.jaxws.EndpointImpl ;
-import org.apache.cxf.jaxws.spring.EndpointDefinitionParser.SpringEndpointImpl ;
-import org.apache.cxf.ws.security.wss4j.DefaultCryptoCoverageChecker ;
-import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor ;
-import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor ;
-import org.springframework.context.support.ClassPathXmlApplicationContext ;
+import org.apache.cxf.Bus;
+import org.apache.cxf.BusFactory;
+import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.jaxws.EndpointImpl;
+import org.apache.cxf.jaxws.spring.EndpointDefinitionParser.SpringEndpointImpl;
+import org.apache.cxf.ws.security.wss4j.DefaultCryptoCoverageChecker;
+import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
+import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * A DOM-based server
  */
 public class Server
 {
-  private static final String WSSE_NS = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" ;
-  private static final String WSU_NS = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" ;
+    private static final String WSSE_NS = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd";
+    private static final String WSU_NS = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd";
 
-  protected void ServerTTT() throws Exception
-  {
-    System.out.println("Starting Server") ;
+    protected void ServerTTT() throws Exception
+    {
+        System.out.println("Starting Server");
 
-    // oauth2-server에서는 beansApi.xml로 설정
-    Object implementor = new GreeterImpl() ;
-    String address = "http://localhost:7070/services/GreeterPort" ;
-    // String address = "http://localhost:9000/SoapContext/GreeterPort";
-    // jaxws:endpoint
-    EndpointImpl endpoint = (EndpointImpl) Endpoint.publish(address, implementor) ;
+        // oauth2-server에서는 beansApi.xml로 설정
+        Object implementor = new GreeterImpl();
+        String address = "http://localhost:7070/services/GreeterPort";
+        // String address = "http://localhost:9000/SoapContext/GreeterPort";
+        // jaxws:endpoint
+        EndpointImpl endpoint = (EndpointImpl) Endpoint.publish(address,
+                implementor);
 
-    // jaxws:outInterceptors
-    Map<String, Object> outProps = new HashMap<>() ;
-    outProps.put("action", "UsernameToken Timestamp Signature Encrypt") ;
+        // jaxws:outInterceptors
+        Map<String, Object> outProps = new HashMap<String, Object>();
+        outProps.put("action", "UsernameToken Timestamp Signature Encrypt");
 
-    outProps.put("passwordType", "PasswordText") ;
-    outProps.put("passwordCallbackClass", "demo.wssec.server.UTPasswordCallback") ;
+        outProps.put("passwordType", "PasswordText");
+        outProps.put("passwordCallbackClass",
+                "demo.wssec.server.UTPasswordCallback");
 
-    outProps.put("user", "Alice") ;
-    outProps.put("signatureUser", "morpit") ;
+        outProps.put("user", "Alice");
+        outProps.put("signatureUser", "morpit");
 
-    outProps.put("encryptionUser", "bethal") ;
+        outProps.put("encryptionUser", "bethal");
 
-    // keystore.file=Truststore.jks
-    outProps.put("encryptionPropFile", "etc/Server_SignVerf.properties") ;
-    outProps.put("encryptionKeyIdentifier", "IssuerSerial") ;
-    outProps.put("encryptionParts", "{Element}{" + WSSE_NS + "}UsernameToken;" + "{Content}{http://schemas.xmlsoap.org/soap/envelope/}Body") ;
+        // keystore.file=Truststore.jks
+        outProps.put("encryptionPropFile", "etc/Server_SignVerf.properties");
+        outProps.put("encryptionKeyIdentifier", "IssuerSerial");
+        outProps.put("encryptionParts", "{Element}{" + WSSE_NS
+                + "}UsernameToken;"
+                + "{Content}{http://schemas.xmlsoap.org/soap/envelope/}Body");
 
-    // keystore.file=Morpit.jks
-    outProps.put("signaturePropFile", "etc/Server_Decrypt.properties") ;
-    outProps.put("signatureKeyIdentifier", "DirectReference") ;
-    outProps.put("signatureParts", "{Element}{" + WSU_NS + "}Timestamp;" + "{Element}{http://schemas.xmlsoap.org/soap/envelope/}Body") ;
+        // keystore.file=Morpit.jks
+        outProps.put("signaturePropFile", "etc/Server_Decrypt.properties");
+        outProps.put("signatureKeyIdentifier", "DirectReference");
+        outProps.put("signatureParts", "{Element}{" + WSU_NS + "}Timestamp;"
+                + "{Element}{http://schemas.xmlsoap.org/soap/envelope/}Body");
 
-    outProps.put("encryptionKeyTransportAlgorithm", "http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p") ;
-    outProps.put("signatureAlgorithm", "http://www.w3.org/2000/09/xmldsig#rsa-sha1") ;
+        outProps.put("encryptionKeyTransportAlgorithm",
+                "http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p");
+        outProps.put("signatureAlgorithm",
+                "http://www.w3.org/2000/09/xmldsig#rsa-sha1");
 
-    endpoint.getOutInterceptors().add(new WSS4JOutInterceptor(outProps)) ;
+        endpoint.getOutInterceptors().add(new WSS4JOutInterceptor(outProps));
 
-    // jaxws:inInterceptors
-    Map<String, Object> inProps = new HashMap<>() ;
+        // jaxws:inInterceptors
+        Map<String, Object> inProps = new HashMap<String, Object>();
 
-    inProps.put("action", "UsernameToken Timestamp Signature Encrypt") ;
-    inProps.put("passwordType", "PasswordDigest") ;
-    inProps.put("passwordCallbackClass", "demo.wssec.server.UTPasswordCallback") ;
+        inProps.put("action", "UsernameToken Timestamp Signature Encrypt");
+        inProps.put("passwordType", "PasswordDigest");
+        inProps.put("passwordCallbackClass",
+                "demo.wssec.server.UTPasswordCallback");
 
-    // keystore.file=Morpit.jks
-    inProps.put("decryptionPropFile", "etc/Server_Decrypt.properties") ;
-    inProps.put("encryptionKeyIdentifier", "IssuerSerial") ;
+        // keystore.file=Morpit.jks
+        inProps.put("decryptionPropFile", "etc/Server_Decrypt.properties");
+        inProps.put("encryptionKeyIdentifier", "IssuerSerial");
 
-    // keystore.file=Truststore.jks
-    inProps.put("signaturePropFile", "etc/Server_SignVerf.properties") ;
-    inProps.put("signatureKeyIdentifier", "DirectReference") ;
-    inProps.put("encryptionKeyTransportAlgorithm", "http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p") ;
-    inProps.put("signatureAlgorithm", "http://www.w3.org/2000/09/xmldsig#rsa-sha1") ;
+        // keystore.file=Truststore.jks
+        inProps.put("signaturePropFile", "etc/Server_SignVerf.properties");
+        inProps.put("signatureKeyIdentifier", "DirectReference");
+        inProps.put("encryptionKeyTransportAlgorithm",
+                "http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p");
+        inProps.put("signatureAlgorithm",
+                "http://www.w3.org/2000/09/xmldsig#rsa-sha1");
 
-    endpoint.getInInterceptors().add(new WSS4JInInterceptor(inProps)) ;
+        endpoint.getInInterceptors().add(new WSS4JInInterceptor(inProps));
 
-    // Check to make sure that the SOAP Body and Timestamp were signed,
-    // and that the SOAP Body was encrypted
-    // CryptoCoverageChecker를 확장하여 SOAP (1.1 + 1.2) 본문이 서명 및 / 또는 암호화되었는지, 타임
-    // 스탬프가 서명되었는지, WS-Addressing ReplyTo 및 FaultTo 헤더가 서명되었는지 여부를 쉽게 확인할 수
-    // 있도록합니다
-    DefaultCryptoCoverageChecker coverageChecker = new DefaultCryptoCoverageChecker() ;
-    // 본문 서명
-    coverageChecker.setSignBody(true) ;
-    // 타임 스탬프 서명
-    coverageChecker.setSignTimestamp(true) ;
-    // 본문 암호화
-    coverageChecker.setEncryptBody(true) ;
-    endpoint.getInInterceptors().add(coverageChecker) ;
+        // Check to make sure that the SOAP Body and Timestamp were signed,
+        // and that the SOAP Body was encrypted
+        // CryptoCoverageChecker를 확장하여 SOAP (1.1 + 1.2) 본문이 서명 및 / 또는 암호화되었는지,
+        // 타임
+        // 스탬프가 서명되었는지, WS-Addressing ReplyTo 및 FaultTo 헤더가 서명되었는지 여부를 쉽게 확인할 수
+        // 있도록합니다
+        DefaultCryptoCoverageChecker coverageChecker = new DefaultCryptoCoverageChecker();
+        // 본문 서명
+        coverageChecker.setSignBody(true);
+        // 타임 스탬프 서명
+        coverageChecker.setSignTimestamp(true);
+        // 본문 암호화
+        coverageChecker.setEncryptBody(true);
+        endpoint.getInInterceptors().add(coverageChecker);
 
-  }
+    }
 
-  public void main(String[] args) throws Exception
-  {
+    public void main(String[] args) throws Exception
+    {
 
-    SpringBusFactory bf = new SpringBusFactory() ;
-    URL busFile = Server.class.getResource("wssec.xml") ;
-    Bus bus = bf.createBus(busFile.toString()) ;
+        SpringBusFactory bf = new SpringBusFactory();
+        URL busFile = Server.class.getResource("wssec.xml");
+        Bus bus = bf.createBus(busFile.toString());
 
-    BusFactory.setDefaultBus(bus) ;
+        BusFactory.setDefaultBus(bus);
 
-    new Server() ;
-    System.out.println("Server ready...") ;
+        new Server();
+        System.out.println("Server ready...");
 
-    // Thread.sleep(5 * 60 * 1000);
-    //
-    // bus.shutdown(true);
-    // System.out.println("Server exiting");
-    // System.exit(0);
-  }
+        // Thread.sleep(5 * 60 * 1000);
+        //
+        // bus.shutdown(true);
+        // System.out.println("Server exiting");
+        // System.exit(0);
+    }
 
-  public void callMain() throws Exception
-  {
+    public void callMain() throws Exception
+    {
 
-    // JaxWsServerFactoryBean fac = new JaxWsServerFactoryBean() ;
-    // System.out.println("########TEST : " + fac.getAddress()) ;
+        // JaxWsServerFactoryBean fac = new JaxWsServerFactoryBean() ;
+        // System.out.println("########TEST : " + fac.getAddress()) ;
 
-    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "/WEB-INF/beansApi.xml" }) ;
-    SpringEndpointImpl endpoint = (SpringEndpointImpl) context.getBean("myWsSecServer") ;
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
+                new String[]
+                { "/WEB-INF/beansApi.xml" });
+        SpringEndpointImpl endpoint = (SpringEndpointImpl) context
+                .getBean("myWsSecServer");
 
-    System.out.println("########TEST : " + endpoint.getAddress()) ;
+        System.out.println("########TEST : " + endpoint.getAddress());
 
-  }
+    }
 
 }

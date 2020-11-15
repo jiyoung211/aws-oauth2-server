@@ -20,8 +20,9 @@
         <!-- The destination file for the code coverage report has to be set to the same value
          in the parent pom and in each module pom. Then JaCoCo will add up information in
          the same report, so that, it will give the cross-module code coverage. -->
-    	<sonar.jacoco.reportPaths>${project.basedir}/target/jacoco-it.exec</sonar.jacoco.reportPaths>
+    	<sonar.jacoco.reportPaths>${oauth.project.basedir}/target/jacoco-it.exec</sonar.jacoco.reportPaths>
     	<spring.version>5.2.5.RELEASE</spring.version> 
+    	<oauth.project.basedir>C:/Users/Administrator/git/aws-oauth2-server</oauth.project.basedir>
     	<!-- <spring.version>3.1.1.RELEASE</spring.version> -->
     </properties>
     <dependencies>
@@ -269,28 +270,28 @@
 		     <artifactId>StoredProcedureDAO</artifactId> 
 		     <version>1.0.0</version> 
 		     <scope>system</scope>
-		      <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/StoredProcedureDAO.jar</systemPath> 
+		      <systemPath>${oauth.project.basedir}/src/main/webapp/WEB-INF/lib/StoredProcedureDAO.jar</systemPath> 
 	      </dependency>
 	      <dependency> 
 		    <groupId>httpclient</groupId>
 		     <artifactId>httpclient</artifactId> 
 		     <version>4.3.3</version> 
 		     <scope>system</scope>
-		      <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/httpclient_4.3.3.jar</systemPath> 
+		      <systemPath>${oauth.project.basedir}/src/main/webapp/WEB-INF/lib/httpclient_4.3.3.jar</systemPath> 
 	      </dependency>
 	      <!-- <dependency> 
 		    <groupId>log4j</groupId>
 		     <artifactId>log4j</artifactId> 
 		     <version>1.2.17</version> 
 		     <scope>system</scope>
-		      <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/log4j-1.2.17.jar</systemPath> 
+		      <systemPath>${oauth.project.basedir}/src/main/webapp/WEB-INF/lib/log4j-1.2.17.jar</systemPath> 
 	      </dependency> -->
 	      <dependency> 
 		    <groupId>org.json</groupId>
 		     <artifactId>org.json</artifactId> 
 		     <version>1.0.0</version> 
 		     <scope>system</scope>
-		      <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/org.json.jar</systemPath> 
+		      <systemPath>${oauth.project.basedir}/src/main/webapp/WEB-INF/lib/org.json.jar</systemPath> 
 	      </dependency>
 	    
 	       <!-- Swagger -->
@@ -395,7 +396,7 @@
                         <configuration>
                             <wsdlOptions>
                                 <wsdlOption>
-                                    <wsdl>${project.basedir}/src/main/webapp/WEB-INF/wsdl/studentDetailsWsdl.wsdl</wsdl>
+                                    <wsdl>${oauth.project.basedir}/src/main/webapp/WEB-INF/wsdl/studentDetailsWsdl.wsdl</wsdl>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>
@@ -405,6 +406,15 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-compiler-plugin</artifactId>
+		        <version>3.6.1</version>
+		        <configuration>
+		          <source>1.8</source>
+		          <target>1.8</target>
+		        </configuration>
+	      </plugin>
 		</plugins>
 	</build>
 	<profiles>		

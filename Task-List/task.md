@@ -26,5 +26,28 @@
 * AWS EC2 인스턴스 지역 변경하기 (이미지를 활용한 방법)
 >출처: https://ndb796.tistory.com/257 [안경잡이개발자]
 
+## 201115
+** java 수동 설치 오류
+-bash: ./javac: No such file or directory
+
+https://velog.io/@woounnan/LINUX-No-such-file-or-directory 
+??
+
+** yum으로 자바 openjdk 설치하기
+1.$ yum list java*jdk-devel
+2.$ sudo yum install java-1.8.0-openjdk-devel.x86_64
+3.$ java -version
+4.$ which javac
+5.$ readlink -f /usr/bin/javac   
+6.$ sudo vi /etc/profile
+ 
+https://altongmon.tistory.com/916
+
+** 프롬프트 전체경로 
+vi /etc/bashrc
+45     [ "$PS1" = "\\s-\\v\\\$ " ] && PS1='[\u@\h $PWD]\\$'
+
+
+		      <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/StoredProcedureDAO.jar</systemPath> 
 
 
