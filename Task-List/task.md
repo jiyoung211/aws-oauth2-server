@@ -27,13 +27,13 @@
 >출처: https://ndb796.tistory.com/257 [안경잡이개발자]
 
 ## 201115
-** java 수동 설치 오류
+**java 수동 설치 오류**  
 -bash: ./javac: No such file or directory
 
 https://velog.io/@woounnan/LINUX-No-such-file-or-directory 
 ??
 
-** yum으로 자바 openjdk 설치하기
+**yum으로 자바 openjdk 설치하기**  
 1.$ yum list java*jdk-devel
 2.$ sudo yum install java-1.8.0-openjdk-devel.x86_64
 3.$ java -version
@@ -43,18 +43,18 @@ https://velog.io/@woounnan/LINUX-No-such-file-or-directory
  
 https://altongmon.tistory.com/916
 
-** 프롬프트 전체경로 
+**프롬프트 전체경로**  
 vi /etc/bashrc
 45     [ "$PS1" = "\\s-\\v\\\$ " ] && PS1='[\u@\h $PWD]\\$'
 
 
-** pom.xml 프로젝트 절대경로 설정
+**pom.xml 프로젝트 절대경로 설정**  
 ${auth.project.basedir}
 
-** aws 인바운드 규칙 추가
+**aws 인바운드 규칙 추가**  
 보안그룹 > 사용자 지정 TCP	TCP	8080	0.0.0.0/0	-
 
-** deploy 에러
+**deploy 에러**  
 
 SEVERE: Unable to deploy collapsed ear in war StandardEngine[Catalina].StandardHost[localhost].StandardContext[/OauthServer]
 org.apache.openejb.OpenEJBException: Unable to load servlet class: demo.wssec.server.GreeterImpl: null
@@ -84,7 +84,7 @@ Caused by: java.lang.NullPointerException
         at org.apache.openejb.config.WsDeployer.processPorts(WsDeployer.java:209)
         ... 19 more
 
-** tomcat 기동오류
+**tomcat 기동오류**  
 jax api 충돌
 catalina_home/conf/catalina.properties
 tomcat.util.scan.StandardJarScanFilter.jarsToSkip
@@ -99,11 +99,11 @@ INFO: validateJarFile(/home/ec2-user/apache-tomee-plus-1.7.5/servers/OauthServer
 Nov 15, 2020 4:54:02 PM org.apache.tomee.catalina.TomEEClassLoaderEnricher validateJarFile
 WARNING: jar '/home/ec2-user/apache-tomee-plus-1.7.5/servers/OauthServer/webapps/OauthServer/WEB-INF/lib/javax.ws.rs-api-2.1.jar' contains offending class: javax.ws.rs.Pathbut: You provide JAXRS 2 API in the webapp, we tolerate it to support some advanced feature but if you expect TomEE to provide it you should remove it
 
-** tomcat  JarScanner 설정
+**tomcat  JarScanner 설정**    
 
 * catalina.properties
 tomcat.util.scan.StandardJarScanFilter.jarsToSkip=\
-*.jar
+ *.jar
 
 * context.xml
 <JarScanner>
