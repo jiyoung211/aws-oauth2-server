@@ -8,67 +8,67 @@ Authorization code Grant Type
    1. REST
    2. SOAP
   
-![enter image description here](./readme/image/oauth/img1.PNG)
-![enter image description here](./readme/image/oauth/img2.PNG)
-![enter image description here](./readme/image/oauth/img3.PNG)
-![enter image description here](./readme/image/oauth/img4.PNG)
-![enter image description here](./readme/image/oauth/img5.PNG)
+![enter image description here](./cxf-server/readme/image/oauth/img1.PNG)
+![enter image description here](./cxf-server/readme/image/oauth/img2.PNG)
+![enter image description here](./cxf-server/readme/image/oauth/img3.PNG)
+![enter image description here](./cxf-server/readme/image/oauth/img4.PNG)
+![enter image description here](./cxf-server/readme/image/oauth/img5.PNG)
 
 # SAAJ 
 
-- »ç¿ëÀÚ°¡ Á÷Á¢ SOAP ¸Ş¼¼Â¡ ¾ÖÇÃ¸®ÄÉÀÌ¼ÇÀ» ÀÛ¼ºÇÒ ¼ö ÀÖ´Â API
-- JAX-RPC¸¦ »ç¿ëÇÏÁö ¾Ê°í SOAP ¸Ş½ÃÂ¡ ÀÀ¿ë ÇÁ·Î±×·¥À» Á÷Á¢ ÀÛ¼ºÇÏµµ·Ï ¼±ÅÃÇÒ ¶§ »ç¿ëÇÒ ¼öÀÖ´Â API
-- SAAJ¸¦ »ç¿ëÇÏ¿© ¸Ş¼Òµå¸¦ È£ÃâÇÔÀ¸·Î½á »ç¿ëÀÚ´Â SOAP ±â¹İ XML ¸Ş¼¼Áö¸¦ ÀĞ°í ÀÛ¼ºÇÒ ¼ö ÀÖÀ¸¸ç,  ÀÎÅÍ³İÀ» ÅëÇØ ÀÌ·± Å¸ÀÔÀÇ ¸Ş¼¼ÁöµéÀ» ÁÖ°í¹ŞÀ» ¼öµµ ÀÖ´Ù.
+- ì‚¬ìš©ìê°€ ì§ì ‘ SOAP ë©”ì„¸ì§• ì• í”Œë¦¬ì¼€ì´ì…˜ì„ ì‘ì„±í•  ìˆ˜ ìˆëŠ” API
+- JAX-RPCë¥¼ ì‚¬ìš©í•˜ì§€ ì•Šê³  SOAP ë©”ì‹œì§• ì‘ìš© í”„ë¡œê·¸ë¨ì„ ì§ì ‘ ì‘ì„±í•˜ë„ë¡ ì„ íƒí•  ë•Œ ì‚¬ìš©í•  ìˆ˜ìˆëŠ” API
+- SAAJë¥¼ ì‚¬ìš©í•˜ì—¬ ë©”ì†Œë“œë¥¼ í˜¸ì¶œí•¨ìœ¼ë¡œì¨ ì‚¬ìš©ìëŠ” SOAP ê¸°ë°˜ XML ë©”ì„¸ì§€ë¥¼ ì½ê³  ì‘ì„±í•  ìˆ˜ ìˆìœ¼ë©°,  ì¸í„°ë„·ì„ í†µí•´ ì´ëŸ° íƒ€ì…ì˜ ë©”ì„¸ì§€ë“¤ì„ ì£¼ê³ ë°›ì„ ìˆ˜ë„ ìˆë‹¤.
 
 1. soapEndpointUrl  : soap service url
 2. soapAction : soap service action
-3. Namespace  : »ç¿ëÀÚ Á¤ÀÇ°ª
-4. NamespaceURI  : service Class targetNamespace¿¡ Á¤ÀÇµÈ °ª 
+3. Namespace  : ì‚¬ìš©ì ì •ì˜ê°’
+4. NamespaceURI  : service Class targetNamespaceì— ì •ì˜ëœ ê°’ 
 5. elementName : wsdl operationName 
-6. childElementName : WebMethodÀÇ ÆÄ¶ó¹ÌÅÍ name
-7. childElementValue : WebMethodÀÇ ÆÄ¶ó¹ÌÅÍ value
+6. childElementName : WebMethodì˜ íŒŒë¼ë¯¸í„° name
+7. childElementValue : WebMethodì˜ íŒŒë¼ë¯¸í„° value
 
-![enter image description here](./readme/image/saaj/img1.PNG)
-![enter image description here](./readme/image/saaj/img2.PNG)
-![enter image description here](./readme/image/saaj/img3.PNG)
+![enter image description here](./cxf-server/readme/image/saaj/img1.PNG)
+![enter image description here](./cxf-server/readme/image/saaj/img2.PNG)
+![enter image description here](./cxf-server/readme/image/saaj/img3.PNG)
 
 
 # Swagger
-- ½º¿ş°Å(Swagger)´Â Open Api Specification(OAS)¸¦ À§ÇÑ ÇÁ·¹ÀÓ¿öÅ©
-- APIµéÀÌ °¡Áö°í ÀÖ´Â ½ºÆå(spec)À» ¸í¼¼, °ü¸®ÇÒ ¼ö ÀÖ´Â ÇÁ·ÎÁ§Æ®
+- ìŠ¤ì›¨ê±°(Swagger)ëŠ” Open Api Specification(OAS)ë¥¼ ìœ„í•œ í”„ë ˆì„ì›Œí¬
+- APIë“¤ì´ ê°€ì§€ê³  ìˆëŠ” ìŠ¤í™(spec)ì„ ëª…ì„¸, ê´€ë¦¬í•  ìˆ˜ ìˆëŠ” í”„ë¡œì íŠ¸
 
 
 
 # JAXB
 
 
-- JAXB´Â ÀÚ¹ÙÀÇ °´Ã¼¸¦ XML·Î Á÷·ÄÈ­ÇÏ¿© Client¿¡°Ô Àü¼ÛÇØÁÖ°í Client°¡ º¸³½ ¿äÃ» XMLÀ» ´Ù½Ã ÀÚ¹Ù °´Ã¼·Î ¿ªÁ÷·ÄÈ­ÇØÁÖ´Â ÀÚ¹Ù API
-- Java ¾î³ëÅ×ÀÌ¼ÇÀ» »ç¿ëÇÏ¿© XML°ú Java °£ÀÇ ¸ÊÇÎÀ» ºôµå
-- JDK6 ~ 9 ¹öÀüÀº JAXB°¡ ³»ÀåµÇ¾î ÀÖ¾î ¶óÀÌºê·¯¸®¸¦ Ãß°¡ ÇÒ ÇÊ¿ä°¡ ¾ø½À´Ï´Ù. 
-- WebServiceÀÇ VO(Value Object) Å¬·¡½º¿¡¼­ JAXB Annotation »ç¿ëÇÏ¿© ÀÛ¼º
+- JAXBëŠ” ìë°”ì˜ ê°ì²´ë¥¼ XMLë¡œ ì§ë ¬í™”í•˜ì—¬ Clientì—ê²Œ ì „ì†¡í•´ì£¼ê³  Clientê°€ ë³´ë‚¸ ìš”ì²­ XMLì„ ë‹¤ì‹œ ìë°” ê°ì²´ë¡œ ì—­ì§ë ¬í™”í•´ì£¼ëŠ” ìë°” API
+- Java ì–´ë…¸í…Œì´ì…˜ì„ ì‚¬ìš©í•˜ì—¬ XMLê³¼ Java ê°„ì˜ ë§µí•‘ì„ ë¹Œë“œ
+- JDK6 ~ 9 ë²„ì „ì€ JAXBê°€ ë‚´ì¥ë˜ì–´ ìˆì–´ ë¼ì´ë¸ŒëŸ¬ë¦¬ë¥¼ ì¶”ê°€ í•  í•„ìš”ê°€ ì—†ìŠµë‹ˆë‹¤. 
+- WebServiceì˜ VO(Value Object) í´ë˜ìŠ¤ì—ì„œ JAXB Annotation ì‚¬ìš©í•˜ì—¬ ì‘ì„±
 
 
 # WS-Security
 
 
-- TCP/IP ·¹º§ÀÇ Àü¼Û ·¹º§ÀÇ º¸¾ÈÀÌ ¾Æ´Ñ ¸Ş½ÃÁö ÀÚÃ¼¿¡ ´ëÇØ º¸¾ÈÀ» Àû¿ë
-- ¸Ş½ÃÁöÀÇ ÀÏºÎ¸¸À» ¾ÏÈ£È­
-- ´ÙÁß ÀÎÁõ¼­¸¦ »ç¿ë °¡´É
-- º¹¼ö °³ÀÇ º¸¾È ÅäÅ« Çã¿ë : ÀÎÁõ¼­ + ¾ÆÀÌµğ/ÆĞ½º¿öµå
-- ¿£µå-Åõ-¿£µå ¸Ş½ÃÁö ±â¹İ 
-- PKI(Public Key Infrastructure, °ø°³ Å° ±â¹İ) ±â¹İ ¾ÏÈ£È­ ±â¹İ
-- X509(ÀÎÁõ¼­) ±â¹İ
--  ¸Ş½ÃÁö ¼­¸í 
+- TCP/IP ë ˆë²¨ì˜ ì „ì†¡ ë ˆë²¨ì˜ ë³´ì•ˆì´ ì•„ë‹Œ ë©”ì‹œì§€ ìì²´ì— ëŒ€í•´ ë³´ì•ˆì„ ì ìš©
+- ë©”ì‹œì§€ì˜ ì¼ë¶€ë§Œì„ ì•”í˜¸í™”
+- ë‹¤ì¤‘ ì¸ì¦ì„œë¥¼ ì‚¬ìš© ê°€ëŠ¥
+- ë³µìˆ˜ ê°œì˜ ë³´ì•ˆ í† í° í—ˆìš© : ì¸ì¦ì„œ + ì•„ì´ë””/íŒ¨ìŠ¤ì›Œë“œ
+- ì—”ë“œ-íˆ¬-ì—”ë“œ ë©”ì‹œì§€ ê¸°ë°˜ 
+- PKI(Public Key Infrastructure, ê³µê°œ í‚¤ ê¸°ë°˜) ê¸°ë°˜ ì•”í˜¸í™” ê¸°ë°˜
+- X509(ì¸ì¦ì„œ) ê¸°ë°˜
+-  ë©”ì‹œì§€ ì„œëª… 
 
 
-       Âü°í WS-Security À¥¼­ºñ½º º¸¾È
+       ì°¸ê³  WS-Security ì›¹ì„œë¹„ìŠ¤ ë³´ì•ˆ
        http://credemol.blogspot.com/2010/07/ws-security.html
        
-       Âü°í Java KeytoolÀ» Å°½ºÅä¾î »ı¼º ¹× °ø°³Å° ¹æ½ÄÀÇ Å° ½Ö »ı¼º
+       ì°¸ê³  Java Keytoolì„ í‚¤ìŠ¤í† ì–´ ìƒì„± ë° ê³µê°œí‚¤ ë°©ì‹ì˜ í‚¤ ìŒ ìƒì„±
        https://m.blog.naver.com/wndrlf2003/220649843082
        
-       Âü°í	Secure Web Services Message using WSE 2.0 µ¥ÀÌÅÍ ±â¼ú ÀÚ·á
+       ì°¸ê³ 	Secure Web Services Message using WSE 2.0 ë°ì´í„° ê¸°ìˆ  ìë£Œ
        https://www.kdata.or.kr/info/info_04_view.html?field=&keyword=&type=techreport&page=334&dbnum=126630&mode=detail&type=techreport
        
-       Âü°í Spring CXF Webservice SSL Àû¿ë
+       ì°¸ê³  Spring CXF Webservice SSL ì ìš©
        http://blog.naver.com/PostView.nhn?blogId=catchbug&logNo=20129493671&redirect=Dlog&widgetTypeCall=true&directAccess=fals
