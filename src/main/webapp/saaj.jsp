@@ -126,7 +126,7 @@
 			       	<tr>
 			       	<tr>
 					   <td><label>filePath(addAttachmentPart)</label></td>
-			           <td><input type="text" class="form-control" name="filePath" id="filePath" value="C:\Users\inzent\Documents\14.Oauth\attachmentTestFile" placeholder="filePath" /></td>
+			           <td><input type="text" class="form-control" name="filePath" id="filePath" value="classpath:attachmentTestFile" placeholder="filePath" /></td>
 			       	<tr>
 			       	<tr>
 			           <td><button type="submit" name="submit_login_button" class=" btn btn-primary" >Submit</button></td>

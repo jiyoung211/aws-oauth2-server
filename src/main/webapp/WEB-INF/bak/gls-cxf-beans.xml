@@ -17,7 +17,7 @@
 	<!-- <context:property-placeholder location="file:${jboss.home.dir}/SGIstuff/${jboss.server.name}/GISAuthServer.properties" 
 		/> -->
 	<context:property-placeholder
-		location="file:C:/eclipse-jee-luna-SR2-win32-x86_64/eclipse v2 gateway/workspace/oauth2-server/src/main/resources/OAuthServer.properties" />
+		location="classpath:OAuthServer.properties" />
 
 
 
