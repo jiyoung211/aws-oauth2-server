@@ -1,11 +1,28 @@
 
 # AWS OAuth2 Server
+http://13.125.39.12:7070/
 - cxf-server : cxf를 사용한 oauth 서버 구현
 - authorization-server : oauth 인증 서버
 - client-server : Authorization Code Grant Type 요청
 - client-agent-server : Implicit Grant Type 요청  
+![enter image description here](./cxf-server/readme/image/oauth/01.aws-index.PNG)
 
-# CXF Server
+
+# client-server  
+1.Authorization Code Grant Type 요청 to OAuth Provider   
+![enter image description here](./cxf-server/readme/image/oauth/03.oauth-client.PNG)  
+
+2. 사용자 로그인
+![enter image description here](./cxf-server/readme/image/oauth/03.oauth-client.PNG)    
+ 
+# client-agent-server
+1. Implicit Grant Type 요청 to OAuth Provider    
+![enter image description here](./cxf-server/readme/image/oauth/05.oauth-agent.PNG)  
+
+2. 사용자 로그인  
+![enter image description here](./cxf-server/readme/image/oauth/06.oauth-agent-auth.PNG)  
+
+# CXF Server v1
 Authorization code Grant Type
 - STEP1. Issue Authorization Code
 - STEP2. Issue Access Token
