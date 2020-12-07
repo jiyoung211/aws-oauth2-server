@@ -9,18 +9,22 @@ http://13.125.39.12:7070/
 
 
 # client-server  
-1.Authorization Code Grant Type 요청 to OAuth Provider   
-![enter image description here](./cxf-server/readme/image/oauth/03.oauth-client.PNG)  
+1.Authorization Code Grant Type 요청 to OAuth Provider    
+![enter image description here](./cxf-server/readme/image/oauth/03.oauth-client.PNG)     
 
-2. 사용자 로그인
-![enter image description here](./cxf-server/readme/image/oauth/03.oauth-client.PNG)    
+2. 사용자 로그인   
+![enter image description here](./cxf-server/readme/image/oauth/03.oauth-client.PNG)       
  
-# client-agent-server
-1. Implicit Grant Type 요청 to OAuth Provider    
-![enter image description here](./cxf-server/readme/image/oauth/05.oauth-agent.PNG)  
+# client-agent-server   
+1. Implicit Grant Type 요청 to OAuth Provider      
+![enter image description here](./cxf-server/readme/image/oauth/05.oauth-agent.PNG)    
 
-2. 사용자 로그인  
-![enter image description here](./cxf-server/readme/image/oauth/06.oauth-agent-auth.PNG)  
+2. 사용자 로그인    
+![enter image description here](./cxf-server/readme/image/oauth/06.oauth-agent-auth.PNG)    
+
+# CXF Server v2
+![enter image description here](./cxf-server/readme/image/oauth/02.cxf-main.PNG)     
+
 
 # CXF Server v1
 Authorization code Grant Type
