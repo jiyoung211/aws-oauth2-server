@@ -92,7 +92,7 @@
 	<div class="container">
 		<div class="row">
 			<div class=" col-md-12">
-			<form id="createForm" name="createForm" action="<%=basePath%>app/main1" method="GET" >
+			<form id="createForm" name="createForm" action="<%=basePath%>app/main1" method="POST" enctype="multipart/form-data">
 				<table class="table">
 				<thead><h1>Create Request SOAPMessage  </h1></thead>
 	    		<tbody>
@@ -126,7 +126,7 @@
 			       	<tr>
 			       	<tr>
 					   <td><label>filePath(addAttachmentPart)</label></td>
-			           <td><input type="text" class="form-control" name="filePath" id="filePath" value="classpath:attachmentTestFile" placeholder="filePath" /></td>
+			           <td><input type="file" class="form-control" name="filePath" id="filePath" value="file" placeholder="filePath" /></td>
 			       	<tr>
 			       	<tr>
 			           <td><button type="submit" name="submit_login_button" class=" btn btn-primary" >Submit</button></td>

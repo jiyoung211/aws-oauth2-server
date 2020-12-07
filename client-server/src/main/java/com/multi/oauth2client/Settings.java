@@ -8,12 +8,12 @@ import java.util.HashMap;
 public class Settings {
 	public static final String CLIENT_ID = "9980228a-1fd8-4501-be77-ce8e98eed18c";
 	public static final String CLIENT_KEY = "8117a5d75e9909eb7858b5638803d72c707fb744";
-	public static final String AUTHORIZE_URL="http://localhost:8000/oauth2provider/oauth2/auth";
-	public static final String ACCES_TOKEN_URL = "http://localhost:8000/oauth2provider/oauth2/token";
+	public static final String AUTHORIZE_URL="http://13.125.39.12:8000/oauth2provider/oauth2/auth";
+	public static final String ACCES_TOKEN_URL = "http://13.125.39.12:8000/oauth2provider/oauth2/token";
 	public static final String RESPONSE_TYPE = "code";
-	public static final String REDIRECT_URI = "http://localhost:8000/oauth2client/callback.jsp";
-	public static final String REDIRECT_URI2 = "http://localhost:8000/oauth2client/callback2.jsp";
-	public static final String PERSONAL_INFO_URL = "http://localhost:8000/oauth2provider/resource/myinfo.do";
+	public static final String REDIRECT_URI = "http://13.125.39.12:8000/oauth2client/callback.jsp";
+	public static final String REDIRECT_URI2 = "http://13.125.39.12:8000/oauth2client/callback2.jsp";
+	public static final String PERSONAL_INFO_URL = "http://13.125.39.12:8000/oauth2provider/resource/myinfo.do";
 	public static final String SCOPE = "reademail,sendemail,readboard,calendar,personalinfo";
 	public static final String USERNAME = "gdhong";
 	public static final String PASSWORD = "gdhong";

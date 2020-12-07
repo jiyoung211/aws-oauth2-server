@@ -198,8 +198,9 @@
     		<tbody>
     			<tr>
 		           <td><label>apiurl</label></td>
-		           <td><input type="text" class="form-control" name="apiurl" id="apiurl" value="<%= basePath %>services/api/call" /></td>
-		       	</tr>
+<%-- 		           <td><input type="text" class="form-control" name="apiurl" id="apiurl" value="<%= basePath %>services/api/call" /></td>
+ --%>		       	<td><input type="text" class="form-control" name="apiurl" id="apiurl" value="<%= basePath %>services/restOauth" /></td>
+ 					</tr>
 		       	<tr>
 		           <td><label>Authorization</label></td>
 		           <td><input type="text" class="form-control" name="Authorization" id="Authorization" value="Bearer <%= data.getTokenKey()%>" /></td>
@@ -220,7 +221,8 @@
     		<tbody>
     			<tr>
 		           <td><label>soapapiurl</label></td>
-		           <td><input type="text" class="form-control" name="soapapiurl" id="soapapiurl" value="<%= basePath %>services/soap" /></td>
+		           <%-- <td><input type="text" class="form-control" name="soapapiurl" id="soapapiurl" value="<%= basePath %>services/soap" /></td> --%>
+		           <td><input type="text" class="form-control" name="soapapiurl" id="soapapiurl" value="<%= basePath %>services/soapOauth" /></td>
 		       	</tr>
 		       	<tr>
 		           <td><label>Authorization</label></td>

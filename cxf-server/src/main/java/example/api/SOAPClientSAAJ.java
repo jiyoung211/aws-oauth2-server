@@ -1,12 +1,15 @@
 package example.api ;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream ;
 import java.io.File ;
+import java.io.FileOutputStream;
 import java.util.ArrayList ;
 import java.util.List ;
 
 import javax.activation.DataHandler ;
 import javax.activation.FileDataSource ;
+import javax.servlet.http.HttpSession;
 import javax.xml.soap.AttachmentPart ;
 import javax.xml.soap.MessageFactory ;
 import javax.xml.soap.SOAPBody ;
@@ -19,6 +22,7 @@ import javax.xml.soap.SOAPMessage ;
 import javax.xml.soap.SOAPPart ;
 
 import org.apache.commons.lang3.StringUtils ;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.w3c.dom.Node ;
 import org.w3c.dom.NodeList ;
 
@@ -30,6 +34,11 @@ class SOAPClientSAAJ
   private String childElementName = "Celsius" ;
   private String childElementValue = "100" ;
   private String filePath = "" ;
+
+  //MulipartFile로 수정 20.12.07
+  private String fileRealPath = "" ;
+  private CommonsMultipartFile file = null;
+
 
   public SOAPClientSAAJ(String myNamespace, String myNamespaceURI, String elementName, String childElementName, String childElementValue, String filePath)
   {
@@ -58,9 +67,41 @@ class SOAPClientSAAJ
       this.filePath = filePath ;
     }
   }
+  
+  public SOAPClientSAAJ(String myNamespace, String myNamespaceURI, String elementName, String childElementName, String childElementValue, CommonsMultipartFile  file, HttpSession session)
+  {
+    if (StringUtils.isNotBlank(myNamespace))
+    {
+      this.myNamespace = myNamespace ;
+    }
+    if (StringUtils.isNotBlank(myNamespaceURI))
+    {
+      this.myNamespaceURI = myNamespaceURI ;
+    }
+    if (StringUtils.isNotBlank(elementName))
+    {
+      this.elementName = elementName ;
+    }
+    if (StringUtils.isNotBlank(childElementName))
+    {
+      this.childElementName = childElementName ;
+    }
+    if (StringUtils.isNotBlank(childElementValue))
+    {
+      this.childElementValue = childElementValue ;
+    }
+    if (file != null)
+    {
+      this.file = file ;
+    }
+    if (session != null)
+    {
+      this.fileRealPath = session.getServletContext().getRealPath("/");  
+    }
+  }
 
-  // SAAJ - SOAP Client Testing
-  protected void createSoapEnvelope(SOAPMessage soapMessage) throws SOAPException
+  // SAAJ - SOAP Client Testing //사용하지 않음
+  protected void createSoapEnvelope(SOAPMessage soapMessage, String tttt) throws SOAPException
   {
     SOAPPart soapPart = soapMessage.getSOAPPart() ;
 
@@ -90,7 +131,6 @@ class SOAPClientSAAJ
       AttachmentPart attachment = soapMessage.createAttachmentPart(dataHandler) ;
       soapMessage.addAttachmentPart(attachment) ;
     }
-
     /*
      * 예상치 않은 요소(URI: "http://webservice.cxfexample.exampledriven.org/", 로컬:
      * "Celsius")입니다. 필요한 요소는 (none)입니다.
@@ -100,7 +140,37 @@ class SOAPClientSAAJ
     // soapBodyElem1.addTextNode(childElementValue) ;
   }
 
-  protected List<String> callSoapWebService(String soapEndpointUrl, String soapAction)
+  
+  protected void createSoapEnvelope(SOAPMessage soapMessage) throws SOAPException
+  {
+    SOAPPart soapPart = soapMessage.getSOAPPart() ;
+
+    // SOAP Envelope
+    SOAPEnvelope envelope = soapPart.getEnvelope() ;
+    envelope.addNamespaceDeclaration(myNamespace, myNamespaceURI) ;
+
+    // SOAP Body
+    SOAPBody soapBody = envelope.getBody() ;
+    SOAPElement soapBodyElem = soapBody.addChildElement(elementName, myNamespace) ;
+
+    String path= this.fileRealPath;
+    
+    // SOAP AttachmentPart
+    if(this.file != null)
+    {
+        String filename=file.getOriginalFilename();  
+        
+       File attachFile =  new File(path + File.separator + filename);
+        
+        FileDataSource fileDataSource = new FileDataSource(attachFile) ;
+        DataHandler dataHandler = new DataHandler(fileDataSource) ;
+        AttachmentPart attachment = soapMessage.createAttachmentPart(dataHandler) ;
+        soapMessage.addAttachmentPart(attachment) ;
+    
+    }
+  }
+  
+  protected List<String> callSoapWebService(String soapEndpointUrl, String soapAction )
   {
     SOAPMessage soapRequest = null ;
     SOAPMessage soapResponse = null ;

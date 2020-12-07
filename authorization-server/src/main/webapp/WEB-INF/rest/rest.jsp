@@ -5,3 +5,4 @@
 	String restdata = (String)request.getAttribute("restdata");
 	response.setContentType(contenttype + "; charset=utf-8");
 %><%=restdata %>
+<%@ include file="/WEB-INF/include-header.jsp"%>

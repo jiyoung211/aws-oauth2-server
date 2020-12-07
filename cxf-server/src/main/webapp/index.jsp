@@ -13,6 +13,8 @@
     if (!basePath.endsWith("/")) {
         basePath += "/";
     }
+    String ip = request.getServerName() ;
+	int port = request.getServerPort() ;
    ClientAccessToken data = (ClientAccessToken)request.getAttribute("clientaccesstoken");
    if(data == null)
    {
@@ -27,7 +29,7 @@
   <head>
     <meta charset="utf-8">
 
-    <title>API Client Information</title>
+    <title>AWS OAuth Server</title>
  	
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
@@ -64,40 +66,16 @@
 
 	<!-- Begin page content -->
     <main role="main" class="container">
-      <h1 class="mt-5">Example </h1>
+      <h1 class="mt-5">AWS OAuth Server </h1>
       <p class="lead">
-	     1. OAuth2 Server <a href="/oauthServer.jsp">/oauthServer.jsp</a>
-      </p>
-      <!-- <p class="lead">
-	     2. OAuth2 Server2 <a href="/login.jsp">/login.jsp</a>
-      </p> -->
-      <!-- <p class="lead">
-	     2. Kakao API <a href="/kakaoMe.jsp">/kakaoMe.jsp</a>
-      </p> -->
-      <p class="lead">
-	     2. SAAJ  <a href="/saaj.jsp">/saaj.jsp</a>
-      </p>
-      <!-- <p class="lead">
-	     3. Swagger  <a href="/swagger/index.html">/swagger/index.html</a>
-      </p> -->
-      <p class="lead">
-	     3. Swagger  <a href="/swagger/index.html">/swagger/index.html</a>
-      </p>
-       <!-- <p class="lead">
-	     <a href="/app/swagger-ui.html">/app/swagger-ui.html</a>
-      </p>
-       <p class="lead">
-	    <a href="http://localhost:7071/swagger-ui.html">http://localhost:7071/swagger-ui.html</a>
+	     1. CXF OAuth Server <a href="http://<%=ip%>:7070/main.jsp">http://<%=ip%>:7070/main.jsp</a>
       </p>
       <p class="lead">
-	    <a href="http://localhost:7072/sujin/swagger-ui.html">http://localhost:7072/sujin/swagger-ui.html</a>
-      </p> -->
-      <!-- <p class="lead">
-	     4. JAXB  <a href="http://localhost:7072">http://localhost:7072</a>
-      </p> -->
-      <!-- <p class="lead">
-	     5. WS-Security  <a href="/wssecurity.jsp">/wssecurity.jsp</a>
-      </p> -->
+	     2. Authorization Code Grant Type OAuth <a href="http://<%=ip%>:8000/oauth2client">http://<%=ip%>:8000/oauth2client</a>
+      </p>
+      <p class="lead">
+	     3. Implicit Grant Type OAuth <a href="http://<%=ip%>:8000/oauth2client_agentflow">http://<%=ip%>:8000/oauth2client_agentflow</a>
+      </p>
       
       
     </main>

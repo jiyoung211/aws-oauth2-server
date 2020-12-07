@@ -3,6 +3,8 @@ package example.api ;
 import java.util.ArrayList ;
 import java.util.List ;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang3.exception.ExceptionUtils ;
 import org.slf4j.Logger ;
 import org.slf4j.LoggerFactory ;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model ;
 import org.springframework.web.bind.annotation.RequestMapping ;
 import org.springframework.web.bind.annotation.RequestMethod ;
 import org.springframework.web.bind.annotation.RequestParam ;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView ;
 
 @Controller
@@ -23,24 +26,29 @@ public class SAAJController
   // org.slf4j.Logger
   private Logger logger = LoggerFactory.getLogger(this.getClass()) ;
 
-  @RequestMapping(value = "/main", method = RequestMethod.GET)
-  public String main(Model model)
-  {
-    String soapEndpointUrl = "http://localhost:7070/services/soap" ;
-    String soapAction = "" ;
-    String myNamespace = "web" ;
-    String myNamespaceURI = "http://webservice.cxfexample.exampledriven.org/" ;
-    String elementName = "readAllLocations" ;
-    String childElementName = "" ;
-    String childElementValue = "" ;
+  
+  //String filePath -> CommonsMultipartFile file로 수정 20.12.07
+	/*
+	 * @RequestMapping(value = "/main", method = RequestMethod.GET) public String
+	 * main(Model model) { String soapEndpointUrl =
+	 * "http://localhost:7070/services/soap" ; String soapAction = "" ; String
+	 * myNamespace = "web" ; String myNamespaceURI =
+	 * "http://webservice.cxfexample.exampledriven.org/" ; String elementName =
+	 * "readAllLocations" ; String childElementName = "" ; String childElementValue
+	 * = "" ;
+	 * 
+	 * return main1(model, soapEndpointUrl, soapAction, myNamespace, myNamespaceURI,
+	 * elementName, childElementName, childElementValue, "") ; }
+	 */
 
-    return main1(model, soapEndpointUrl, soapAction, myNamespace, myNamespaceURI, elementName, childElementName, childElementValue, "") ;
-  }
-
-  @RequestMapping(value = "/main1", method = RequestMethod.GET)
-  public String main1(Model model, @RequestParam("soapEndpointUrl") String soapEndpointUrl, @RequestParam("soapAction") String soapAction, @RequestParam("myNamespace") String myNamespace, @RequestParam("myNamespaceURI") String myNamespaceURI, @RequestParam("elementName") String elementName, @RequestParam("childElementName") String childElementName, @RequestParam("childElementValue") String childElementValue, @RequestParam("filePath") String filePath)
+  @RequestMapping(value = "/main1", method = RequestMethod.POST)
+  public String main1(Model model, @RequestParam("soapEndpointUrl") String soapEndpointUrl, @RequestParam("soapAction") String soapAction, 
+		  @RequestParam("myNamespace") String myNamespace, @RequestParam("myNamespaceURI") String myNamespaceURI,
+		  @RequestParam("elementName") String elementName, @RequestParam("childElementName") String childElementName, 
+		  @RequestParam("childElementValue") String childElementValue, @RequestParam CommonsMultipartFile file, HttpSession session )
+//  @RequestParam("filePath") String filePath)
   {
-    SOAPClientSAAJ sOAPClientSAAJ = new SOAPClientSAAJ(myNamespace, myNamespaceURI, elementName, childElementName, childElementValue, filePath) ;
+    SOAPClientSAAJ sOAPClientSAAJ = new SOAPClientSAAJ(myNamespace, myNamespaceURI, elementName, childElementName, childElementValue, file, session) ;
     String requestMessage = new String() ;
     String responseMessage = new String() ;
     List<String> result = new ArrayList<String>() ;

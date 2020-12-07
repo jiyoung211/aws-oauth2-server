@@ -2,3 +2,4 @@
     pageEncoding="utf-8"%><%
   String json = (String)request.getAttribute("json");
 %><%=json %>
+<%@ include file="/WEB-INF/include-header.jsp"%>

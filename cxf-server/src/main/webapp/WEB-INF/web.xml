@@ -9,7 +9,7 @@
          	/WEB-INF/beansApi.xml
         	/WEB-INF/beansClient.xml 
         	classpath:applicationContext*.xml
-    	   <!--  /WEB-INF/beansWssecClient.xml
+    	   <!-- /WEB-INF/beansWssecClient.xml
     	    /WEB-INF/beansWssecServer.xml -->
        	</param-value>
     </context-param>
@@ -51,6 +51,6 @@
 	</servlet-mapping>
 	
 	<welcome-file-list>
-        <welcome-file>main.jsp</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

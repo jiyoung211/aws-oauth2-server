@@ -11,3 +11,4 @@
        "message" : "<%=temp[1] %>"
     }
 }
+<%@ include file="/WEB-INF/include-header.jsp"%>

@@ -22,7 +22,7 @@
          the same report, so that, it will give the cross-module code coverage. -->
     	<sonar.jacoco.reportPaths>${oauth.project.basedir}/target/jacoco-it.exec</sonar.jacoco.reportPaths>
     	<spring.version>5.2.5.RELEASE</spring.version> 
-    	<oauth.project.basedir>C:/git/aws-oauth2-server</oauth.project.basedir>
+    	<oauth.project.basedir>D:/git/aws-oauth2-server/cxf-server</oauth.project.basedir>
     	<!-- <spring.version>3.1.1.RELEASE</spring.version> -->
     </properties>
     <dependencies>
@@ -342,12 +342,18 @@
             <artifactId>cxf-rt-ws-security</artifactId>
             <version>${cxf.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.2.2</version>
+		</dependency>
         
         
 		        
     </dependencies>
     <build>
-		<finalName>OauthServer</finalName>
+		<finalName>ROOT</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<plugins>
