@@ -1,11 +1,13 @@
 
 # AWS OAuth2 Server
 http://ec2-52-78-1-158.ap-northeast-2.compute.amazonaws.com:7070/
-- cxf-server : cxf를 사용한 oauth 서버 구현
-- authorization-server : oauth 인증 서버
+- authorization-server : oauth 인증 서버 (인증 계정 : gdhong/gdhong )
 - client-server : Authorization Code Grant Type 요청
-- client-agent-server : Implicit Grant Type 요청  
-  ![enter image description here](./cxf-server/readme/image/oauth/01.aws-index.PNG)
+- client-agent-server : Implicit Grant Type 요청
+- cxf-server : cxf를 사용한 oauth 서버 구현 (인증 계정 : test/test )
+![enter image description here](./cxf-server/readme/image/oauth/01.aws-index.PNG)
+  
+
 
 
 # client-server  
