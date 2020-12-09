@@ -1,34 +1,29 @@
 
 # AWS OAuth2 Server
 http://ec2-52-78-1-158.ap-northeast-2.compute.amazonaws.com:7070/
+![enter image description here](./cxf-server/readme/image/oauth/01.aws-index.PNG)
 - authorization-server : oauth 인증 서버 (인증 계정 : gdhong/gdhong )
 - client-server : Authorization Code Grant Type 요청
 - client-agent-server : Implicit Grant Type 요청
 - cxf-server : cxf를 사용한 oauth 서버 구현 (인증 계정 : test/test )
-![enter image description here](./cxf-server/readme/image/oauth/01.aws-index.PNG)
-  
+- swagger-server : aws에서 서비스하는 API 확인 
 
 
-
-# client-server  
+## Client Server  
 1.Authorization Code Grant Type 요청 to OAuth Provider  
 ![enter image description here](./cxf-server/readme/image/oauth/03.oauth-client.PNG)     
 
 2. 사용자 로그인   
-  ![enter image description here](./cxf-server/readme/image/oauth/03.oauth-client.PNG)       
+![enter image description here](./cxf-server/readme/image/oauth/03.oauth-client.PNG)       
  
-# client-agent-server   
+## Client Agent Server   
 1. Implicit Grant Type 요청 to OAuth Provider      
 ![enter image description here](./cxf-server/readme/image/oauth/05.oauth-agent.PNG)    
 
 2. 사용자 로그인    
 ![enter image description here](./cxf-server/readme/image/oauth/06.oauth-agent-auth.PNG)    
 
-# CXF Server v2
-![enter image description here](./cxf-server/readme/image/oauth/02.cxf-main.PNG)     
-
-
-# CXF Server v1
+## CXF Server
 Authorization code Grant Type
 - STEP1. Issue Authorization Code
 - STEP2. Issue Access Token
@@ -42,7 +37,13 @@ Authorization code Grant Type
 ![enter image description here](./cxf-server/readme/image/oauth/img4.PNG)
 ![enter image description here](./cxf-server/readme/image/oauth/img5.PNG)
 
-# SAAJ 
+
+## Swagger
+- 스웨거(Swagger)는 Open Api Specification(OAS)를 위한 프레임워크
+- API들이 가지고 있는 스펙(spec)을 명세, 관리할 수 있는 프로젝트
+![enter image description here](./cxf-server/readme/image/oauth/07swagger-index.PNG)  
+
+## SAAJ 
 
 - 사용자가 직접 SOAP 메세징 애플리케이션을 작성할 수 있는 API
 - JAX-RPC를 사용하지 않고 SOAP 메시징 응용 프로그램을 직접 작성하도록 선택할 때 사용할 수있는 API
@@ -61,13 +62,7 @@ Authorization code Grant Type
 ![enter image description here](./cxf-server/readme/image/saaj/img3.PNG)
 
 
-# Swagger
-- 스웨거(Swagger)는 Open Api Specification(OAS)를 위한 프레임워크
-- API들이 가지고 있는 스펙(spec)을 명세, 관리할 수 있는 프로젝트
-
-
-
-# JAXB
+## JAXB
 
 
 - JAXB는 자바의 객체를 XML로 직렬화하여 Client에게 전송해주고 Client가 보낸 요청 XML을 다시 자바 객체로 역직렬화해주는 자바 API
@@ -76,7 +71,7 @@ Authorization code Grant Type
 - WebService의 VO(Value Object) 클래스에서 JAXB Annotation 사용하여 작성
 
 
-# WS-Security
+## WS-Security
 
 
 - TCP/IP 레벨의 전송 레벨의 보안이 아닌 메시지 자체에 대해 보안을 적용
