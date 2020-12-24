@@ -9,4 +9,4 @@ spring.datasource.password = root
 spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.OracleDialect
 
 # Hibernate ddl auto (create, create-drop, validate, update)
-spring.jpa.hibernate.ddl-auto = update
+# spring.jpa.hibernate.ddl-auto = update
