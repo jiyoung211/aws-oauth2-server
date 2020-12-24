@@ -23,19 +23,19 @@ public class CustomErrorContoller implements ErrorController
 		HttpStatus httpStatus = HttpStatus.resolve(Integer.parseInt(statusCode));
 		if (httpStatus == HttpStatus.UNAUTHORIZED)
 		{
-			return "/error/401";
+			return "error/401";
 		} else if (httpStatus == HttpStatus.NOT_FOUND)
 		{
-			return "/error/404";
+			return "error/404";
 		} else if (httpStatus == HttpStatus.INTERNAL_SERVER_ERROR)
 		{
-			return "/error/500";
+			return "error/500";
 		}
 
 		model.addAttribute("httpStatus", httpStatus.value());
 		model.addAttribute("reasonPhrase", httpStatus.getReasonPhrase());
 
-		return "/error/other";
+		return "error/other";
 	}
 
 	@Override

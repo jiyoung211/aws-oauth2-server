@@ -35,7 +35,15 @@ public class ClientController
 	{
 		List<Client> clients = this.getAllClients();
 		model.addAttribute("clients", clients);
-		return "/pub/client";
+		return "pub/client";
+	}
+
+	@GetMapping("/page")
+	public String page(Model model)
+	{
+		List<Client> clients = this.getAllClients();
+		model.addAttribute("clients", clients);
+		return "/WEB-INF/view/pub/client.jsp";
 	}
 
 	@GetMapping("/list")
