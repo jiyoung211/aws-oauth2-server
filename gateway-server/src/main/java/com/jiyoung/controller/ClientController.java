@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jiyoung.model.Client;
 import com.jiyoung.repository.ClientRepository;
@@ -22,22 +24,31 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RestController
+@Controller
 @RequestMapping(path = "/client")
 public class ClientController
 {
 	@Autowired
 	private ClientRepository clientRepository;
 
-	@Operation(summary = "client list", description = "client 목록을 가져온다")
 	@GetMapping
-	public List<Client> getAllClients()
+	public String main(Model model)
+	{
+		List<Client> clients = this.getAllClients();
+		model.addAttribute("clients", clients);
+		return "/test";
+	}
+
+	@Operation(summary = "client list", description = "client 목록을 가져온다")
+	@GetMapping("/all")
+	public @ResponseBody List<Client> getAllClients()
 	{
 		return clientRepository.findAll();
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Client> getClientById(@PathVariable(value = "id") String clientid) throws Exception
+	public @ResponseBody ResponseEntity<Client> getClientById(@PathVariable(value = "id") String clientid)
+			throws Exception
 	{
 		Client client = clientRepository.findById(clientid)
 				.orElseThrow(() -> new Exception("Client not found for this id :: " + clientid));
@@ -46,13 +57,13 @@ public class ClientController
 	}
 
 	@PostMapping
-	public Client createClient(@RequestBody Client client)
+	public @ResponseBody Client createClient(@RequestBody Client client)
 	{
 		return clientRepository.save(client);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Client> updateClient(@PathVariable(value = "id") String clientid,
+	public @ResponseBody ResponseEntity<Client> updateClient(@PathVariable(value = "id") String clientid,
 			@RequestBody Client clientDetails) throws Exception
 	{
 		Client client = clientRepository.findById(clientid)
@@ -81,7 +92,7 @@ public class ClientController
 	}
 
 	@DeleteMapping("/{id}")
-	public Map<String, Boolean> deleteClient(@PathVariable(value = "id") String clientid) throws Exception
+	public @ResponseBody Map<String, Boolean> deleteClient(@PathVariable(value = "id") String clientid) throws Exception
 	{
 		Client client = clientRepository.findById(clientid)
 				.orElseThrow(() -> new Exception("Client not found for this id :: " + clientid));
