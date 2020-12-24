@@ -9,6 +9,8 @@
 <%@ page import="org.apache.cxf.rs.security.oauth2.common.ClientAccessToken"%>
 
 <% 
+	String ip = request.getServerName() ;
+	int port = request.getServerPort() ;
     String basePath = request.getContextPath();
     if (!basePath.endsWith("/")) {
         basePath += "/";
@@ -137,7 +139,7 @@
 		       	</tr>
 		       	<tr>
 		           <td><label>redirect_uri</label></td>
-		           <td><input type="text" class="form-control" name="redirect_uri" id="redirect_uri1" value="http://localhost:7070/oauthServer.jsp" /></td>
+		           <td><input type="text" class="form-control" name="redirect_uri" id="redirect_uri1" value="http://<%=ip%>:<%=port%><%=basePath%>oauthServer.jsp" /></td>
 		       	</tr>
 		       	<tr>
 		           <td><label>state</label></td>
@@ -173,7 +175,7 @@
 		       	</tr>
 		       	<tr>
 		           <td><label>redirect_uri</label></td>
-		           <td><input type="text" class="form-control" name="redirect_uri" id="redirect_uri" value="http://localhost:7070/oauthServer.jsp" /></td>
+		           <td><input type="text" class="form-control" name="redirect_uri" id="redirect_uri" value="http://<%=ip%>:<%=port%><%=basePath%>oauthServer.jsp" /></td>
 		       	</tr>
 		       	<tr>
 		           <td><label>grant_type</label></td>
@@ -198,8 +200,8 @@
     		<tbody>
     			<tr>
 		           <td><label>apiurl</label></td>
-<%-- 		           <td><input type="text" class="form-control" name="apiurl" id="apiurl" value="<%= basePath %>services/api/call" /></td>
- --%>		       	<td><input type="text" class="form-control" name="apiurl" id="apiurl" value="<%= basePath %>services/restOauth" /></td>
+ 		           <td><input type="text" class="form-control" name="apiurl" id="apiurl" value="<%= basePath %>services/rest" /></td>
+ 				<%-- <td><input type="text" class="form-control" name="apiurl" id="apiurl" value="<%= basePath %>services/restOauth" /></td> --%>
  					</tr>
 		       	<tr>
 		           <td><label>Authorization</label></td>
@@ -221,8 +223,8 @@
     		<tbody>
     			<tr>
 		           <td><label>soapapiurl</label></td>
-		           <%-- <td><input type="text" class="form-control" name="soapapiurl" id="soapapiurl" value="<%= basePath %>services/soap" /></td> --%>
-		           <td><input type="text" class="form-control" name="soapapiurl" id="soapapiurl" value="<%= basePath %>services/soapOauth" /></td>
+		          <td><input type="text" class="form-control" name="soapapiurl" id="soapapiurl" value="<%= basePath %>services/soap" /></td> 
+		          <%--  <td><input type="text" class="form-control" name="soapapiurl" id="soapapiurl" value="<%= basePath %>services/soapOauth" /></td> --%>
 		       	</tr>
 		       	<tr>
 		           <td><label>Authorization</label></td>

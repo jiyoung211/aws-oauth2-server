@@ -71,8 +71,8 @@ function deny() {
 			<form id="f1" method="post" action="<%=currentUrl %>">
 				<input type="hidden" id="isallow" name="isallow" value="true" />
 		<% if (!isloggined) { 	%>
-				계정 : <input type="text" id="userid" name="userid" /><br>
-				암호 : <input type="text" id="password" name="password" /><br>
+				계정 : <input type="text" id="userid" name="userid" value="gdhong" /><br>
+				암호 : <input type="text" id="password" name="password" value="gdhong" /><br>
 		<% } else { %>
 				<h3>이미 로그인하셨습니다. 승인하시겠습니까?</h3>
 		<% } %>

@@ -40,7 +40,7 @@
 		</jaxrs:serviceBeans>
 		<jaxrs:providers>
 			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
-			<ref bean="oauthFilter"/>
+			<!-- <ref bean="oauthFilter"/>   -->
 		</jaxrs:providers>
 		<jaxrs:properties>	
 			<entry key="rs.security.signature.in.properties" value="classpath:rs.security.properties"/> 
@@ -63,9 +63,9 @@
 	
 	 <jaxws:endpoint id="myLocation" implementor="example.webserice.LocationServiceEndpoint"
 	wsdlLocation="/WEB-INF/wsdl/cxfSoap.wsdl" address="/soapOauth" >
-		 <jaxws:inInterceptors>
-              <ref bean="oAuthRequestInterceptor" />
-          </jaxws:inInterceptors> 
+		 <!-- <jaxws:inInterceptors>
+            <ref bean="oAuthRequestInterceptor" /> 
+          </jaxws:inInterceptors>  -->
           <jaxws:properties>	
 	        <entry key="rs.security.keystore.type" value="jks"/>
 			<entry key="rs.security.keystore.password" value="password"/>

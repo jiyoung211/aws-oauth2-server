@@ -20,18 +20,19 @@
         <!-- The destination file for the code coverage report has to be set to the same value
          in the parent pom and in each module pom. Then JaCoCo will add up information in
          the same report, so that, it will give the cross-module code coverage. -->
-    	<sonar.jacoco.reportPaths>${oauth.project.basedir}/target/jacoco-it.exec</sonar.jacoco.reportPaths>
+    	<sonar.jacoco.reportPaths>${project.basedir}/target/jacoco-it.exec</sonar.jacoco.reportPaths>
     	<spring.version>5.2.5.RELEASE</spring.version> 
-    	<oauth.project.basedir>D:/git/aws-oauth2-server/cxf-server</oauth.project.basedir>
+    	<oauth.project.basedir>${project.basedir}</oauth.project.basedir>
     	<!-- <spring.version>3.1.1.RELEASE</spring.version> -->
     </properties>
     <dependencies>
 	    <!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc8 -->
-		<dependency>
+		<!-- <dependency>
 		    <groupId>com.oracle.database.jdbc</groupId>
 		    <artifactId>ojdbc8</artifactId>
 		    <version>12.2.0.1</version>
-		</dependency>
+		</dependency> -->
+		
     	<dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxws</artifactId>
@@ -276,14 +277,14 @@
 		     <artifactId>StoredProcedureDAO</artifactId> 
 		     <version>1.0.0</version> 
 		     <scope>system</scope>
-		      <systemPath>${oauth.project.basedir}/src/main/webapp/WEB-INF/lib/StoredProcedureDAO.jar</systemPath> 
+		      <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/StoredProcedureDAO.jar</systemPath> 
 	      </dependency>
 	      <dependency> 
 		    <groupId>httpclient</groupId>
 		     <artifactId>httpclient</artifactId> 
 		     <version>4.3.3</version> 
 		     <scope>system</scope>
-		      <systemPath>${oauth.project.basedir}/src/main/webapp/WEB-INF/lib/httpclient_4.3.3.jar</systemPath> 
+		      <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/httpclient_4.3.3.jar</systemPath> 
 	      </dependency>
 	      <!-- <dependency> 
 		    <groupId>log4j</groupId>
@@ -297,7 +298,7 @@
 		     <artifactId>org.json</artifactId> 
 		     <version>1.0.0</version> 
 		     <scope>system</scope>
-		      <systemPath>${oauth.project.basedir}/src/main/webapp/WEB-INF/lib/org.json.jar</systemPath> 
+		      <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/org.json.jar</systemPath> 
 	      </dependency>
 	    
 	       <!-- Swagger -->
@@ -408,7 +409,7 @@
                         <configuration>
                             <wsdlOptions>
                                 <wsdlOption>
-                                    <wsdl>${oauth.project.basedir}/src/main/webapp/WEB-INF/wsdl/studentDetailsWsdl.wsdl</wsdl>
+                                    <wsdl>${project.basedir}/src/main/webapp/WEB-INF/wsdl/studentDetailsWsdl.wsdl</wsdl>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>

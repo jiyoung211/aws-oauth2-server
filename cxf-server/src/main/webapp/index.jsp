@@ -38,11 +38,32 @@
 		<link href="/assets/css/font-awesome.min.css" rel="stylesheet" /> 
 		<link href="/main.css" rel="stylesheet" /> 
 	
+		<script type="text/javascript">
+			function aaaaaaaa()
+			{
+				alert("Server migration is in progress due to overload ... ");
 	
+			}
+			//aaaaaaaa();
+		</script>
+	<style>
+	.masthead {
+    margin-bottom: 50px;
+    background: no-repeat center center;
+    background-color: #868e96;
+    background-attachment: scroll;
+    position: relative;
+    background-size: 100%;
+    color: #fff;
+}
+	</style>
+	
+
 </head>
 <body>
-   <header>
-	   <nav class="navbar navbar-inverse navbar-fixed-top">
+
+	<header>
+     <nav class="navbar navbar-inverse navbar-fixed-top">
 	      <div class="container">
 	        <div class="navbar-header">
 	          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -64,21 +85,54 @@
 	    </nav>
     </header>
 
-	<!-- Begin page content -->
-    <main role="main" class="container">
-      <h1 class="mt-5">AWS OAuth Server </h1>
-      <p class="lead">
-	     1. CXF OAuth Server <a href="http://<%=ip%>:7070/main.jsp">http://<%=ip%>:7070/main.jsp</a>
-      </p>
-      <p class="lead">
-	     2. Authorization Code Grant Type OAuth <a href="http://<%=ip%>:8000/oauth2client">http://<%=ip%>:8000/oauth2client</a>
-      </p>
-      <p class="lead">
-	     3. Implicit Grant Type OAuth <a href="http://<%=ip%>:8000/oauth2client_agentflow">http://<%=ip%>:8000/oauth2client_agentflow</a>
-      </p>
-      
-      
-    </main>
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron masthead"  style="background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ),url('http://<%=ip%>:<%=port%>/<%=basePath%>/img/home-bg.jpg');">
+      <div class="container">
+        <h1>AWS OAuth Server</h1>
+        <p>oauth2.0 authentication demo server</p>
+        <!-- <p><a class="btn btn-primary btn" href="#" role="button">Learn more &raquo;</a></p> -->
+      </div>
+    </div>
+
+    <div class="container ">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-6">
+              <h2>Authorization Code Grant Type</h2>
+          <p>Request Oauth authentication as an implicit authorization type to Oauth2 Provider</p>
+          <p><a class="btn btn-default" href="http://<%=ip%>:8000/oauth2client" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-6">
+          <h2>Implicit Grant Type</h2>
+          <p>Request Oauth authentication as an implicit authorization type to Oauth2 Provider</p>
+          <p><a class="btn btn-default" href="http://<%=ip%>:8000/oauth2client_agentflow" role="button">View details &raquo;</a></p>
+       </div>
+      </div>
+      <div class="row">
+      	<div class="col-md-6">
+          <h2>CXF Server</h2>
+          <p>Implementing Oauth server using Apache CXF</p>
+          <p><a class="btn btn-default" href="http://<%=ip%>:7070/oauthServer.jsp" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-6">
+          <h2>Swagger Server</h2>
+          <p>Shows API specification in CXF server</p>
+          <p><a class="btn btn-default" href="http://<%=ip%>:7070/swagger/index.html" role="button">View details &raquo;</a></p>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer >
+        <p>&copy; Company 2014</p>
+      </footer>
+    </div> <!-- /container -->
+
+	
+	
+	
+	
+
 
 
 	

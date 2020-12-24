@@ -37,9 +37,10 @@
     <script src="./swagger-ui-standalone-preset.js"> </script>
     <script>
     window.onload = function() {
+    	
       // Begin Swagger UI call region
       const ui = SwaggerUIBundle({
-        url: "http://localhost:7070/app/v2/api-docs",
+        url: "/app/v2/api-docs",
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [

@@ -38,11 +38,11 @@
 			<table class="table">
 				<tr>
 					<td><label>UserID</label></td>
-					<td><input class="form-control" type="text" name="userid" id="userid" value="" /></td>
+					<td><input class="form-control" type="text" name="userid" id="userid" value="gdhong" /></td>
 				</tr>
 				<tr>
 					<td><label>Password</label></td>
-					<td><input class="form-control" type="password" name="password"  id="password" value="" /></td>
+					<td><input class="form-control" type="password" name="password"  id="password" value="gdhong" /></td>
 				</tr>
 				<tr>
 					<td colspan="2">

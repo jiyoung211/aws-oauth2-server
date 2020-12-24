@@ -63,5 +63,4 @@
 	}
 %>
 <%=result %>
-<%@ include file="/WEB-INF/include-header.jsp"%>
 

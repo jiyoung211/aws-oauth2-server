@@ -64,7 +64,7 @@
 
 	<!-- Begin page content -->
     <main role="main" class="container">
-      <h1 class="mt-5">Example </h1>
+      <h1 class="mt-5">CXF Server </h1>
       <p class="lead">
 	     1. OAuth2 Server <a href="/oauthServer.jsp">/oauthServer.jsp</a>
       </p>
