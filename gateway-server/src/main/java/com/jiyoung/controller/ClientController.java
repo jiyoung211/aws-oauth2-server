@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jiyoung.model.Client;
 import com.jiyoung.repository.ClientRepository;
 
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -36,11 +35,10 @@ public class ClientController
 	{
 		List<Client> clients = this.getAllClients();
 		model.addAttribute("clients", clients);
-		return "/test";
+		return "/pub/client";
 	}
 
-	@Operation(summary = "client list", description = "client 목록을 가져온다")
-	@GetMapping("/all")
+	@GetMapping("/list")
 	public @ResponseBody List<Client> getAllClients()
 	{
 		return clientRepository.findAll();

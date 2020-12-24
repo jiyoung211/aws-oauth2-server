@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>500 Error</title>
-        <link href="css/styles.css" rel="stylesheet" />
+        <title>404 Error</title>
+        <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -18,9 +18,9 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-6">
                                 <div class="text-center mt-4">
-                                    <h1 class="display-1">500</h1>
-                                    <p class="lead">Internal Server Error</p>
-                                    <a href="index.html">
+                                    <img class="mb-4 img-error" src="/assets/img/error-404-monochrome.svg" />
+                                    <p class="lead">This requested URL was not found on this server.</p>
+                                    <a href="/">
                                         <i class="fas fa-arrow-left mr-1"></i>
                                         Return to Home
                                     </a>
@@ -47,6 +47,6 @@
         </div>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
+        <script src="/js/scripts.js"></script>
     </body>
 </html>
