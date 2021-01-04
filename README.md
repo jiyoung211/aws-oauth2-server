@@ -1,5 +1,22 @@
 
 # AWS OAuth2 Server
+## open api developers  
+http://ec2-52-78-1-158.ap-northeast-2.compute.amazonaws.com:8081/  
+*Library List*
+* spring-boot-starter-parent / 2.4.0
+* spring-boot-starter-data-jpa / -
+* spring-boot-starter-web / -
+* spring-boot-devtools / -
+* jstl / -
+* tomcat-embed-jasper / -
+* ojdbc6 / 11.2.0.4
+* lombok / -
+* springdoc-openapi-ui / 1.5.0
+* commons-httpclient / 3.1
+* jackson-mapper-asl / 1.9.1
+* spring-boot-starter-test / -  
+  
+## AWS OAuth2 Server
 http://ec2-52-78-1-158.ap-northeast-2.compute.amazonaws.com:7070/
 ![enter image description here](./cxf-server/readme/image/oauth/01.aws-index.PNG)
 - authorization-server : oauth 인증 서버 (인증 계정 : gdhong/gdhong )
