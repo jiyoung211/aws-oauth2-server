@@ -2,6 +2,11 @@
 # AWS OAuth2 Server
 ## open api developers  
 http://ec2-52-78-1-158.ap-northeast-2.compute.amazonaws.com:8081/  
+![enter image description here](./cxf-server/readme/image/img6.PNG)   
+![enter image description here](./cxf-server/readme/image/img7.PNG)   
+![enter image description here](./cxf-server/readme/image/img8.PNG)   
+![enter image description here](./cxf-server/readme/image/img9.PNG)   
+![enter image description here](./cxf-server/readme/image/img10.PNG)   
 *Library List*
 * spring-boot-starter-parent / 2.4.0
 * spring-boot-starter-data-jpa / -
