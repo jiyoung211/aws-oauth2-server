@@ -1,5 +1,6 @@
 
 # AWS OAuth2 Server
+AWS 요금문제로 서비스 중단 !!!
 ## open api developers  
 http://ec2-52-78-1-158.ap-northeast-2.compute.amazonaws.com:8081/  
 ![enter image description here](./cxf-server/readme/image/img6.PNG)   
